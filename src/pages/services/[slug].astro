@@ -17,8 +17,8 @@ const { slug } = Astro.params;
 const service = getServiceBySlug(slug || '');
 if (!service) return Astro.redirect('/services/');
 
-const title = `${service.name} Manchester | No Call-Out Fee | 24/7`;
-const description = `${service.description} No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted} for same-day ${service.name.toLowerCase()} in Manchester.`;
+const title = `${service.name} ${BRAND.primaryLocation} | No Call-Out Fee | 24/7`;
+const description = `${service.description} No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted} for same-day ${service.name.toLowerCase()} in ${BRAND.primaryLocation}.`;
 
 const breadcrumbSchema = getBreadcrumbSchema([
   { name: 'Home', url: '/' },
@@ -38,7 +38,7 @@ const related = getRelatedServices(service.slug);
 
 <BaseLayout title={title} description={description} canonical={`/services/${service.slug}/`} schema={pageSchema} image={service.ogImage}>
   <HeroWithLeadForm
-    title={`${service.name} in Manchester`}
+    title={`${service.name} in ${BRAND.primaryLocation}`}
     description={service.description}
     formId={`service-${service.slug}-lead-form`}
     source={`service:${service.slug}`}

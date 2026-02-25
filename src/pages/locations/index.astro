@@ -7,10 +7,10 @@ import { SERVICES } from '../../data/services';
 import { getBreadcrumbSchema, getWebPageSchema, serializeSchema } from '../../utils/schema';
 
 // SEO-optimized title (50-60 chars)
-const title = `Locations | Drainage Services Greater Manchester`;
+const title = `Locations | ${BRAND.brandName}`;
 
 // SEO-optimized description (120-155 chars) with benefits and CTA
-const description = `Professional drain services across Manchester, Salford, Bolton, Stockport and beyond. No call-out fee, local engineers, 24/7. Call ${BRAND.phoneFormatted}.`;
+const description = `Professional plumbing and boiler services across Stoke-on-Trent, Newcastle-under-Lyme, Stafford, Crewe, Congleton, and Leek. No call-out fee, local engineers, 24/7. Call ${BRAND.phoneFormatted}.`;
 
 const breadcrumbItems = [
   { name: "Home", url: "/" },
@@ -31,7 +31,7 @@ const combinedPageSchema = [breadcrumbSchema, webPageSchema];
 <BaseLayout title={title} description={description} canonical="/locations/" image="/og/locations-og.jpg" schema={combinedPageSchema}>
   <HeroWithLeadForm
     title="Areas We Cover"
-    description="Professional drainage services across Manchester & Greater Manchester. Fast response, local engineers, 24/7 availability."
+    description={`Professional plumbing and boiler services across ${BRAND.serviceAreaLabel}. Fast response, local engineers, 24/7 availability.`}
     formId="locations-lead-form"
     source="locations"
   />
@@ -46,7 +46,7 @@ const combinedPageSchema = [breadcrumbSchema, webPageSchema];
       </nav>
       <div class="max-w-4xl mx-auto text-center">
         <p class="text-xl md:text-2xl text-muted-foreground leading-relaxed mb-6">
-          {BRAND.brandName} is proud to serve homeowners and businesses throughout {BRAND.serviceAreaLabel} and the surrounding areas. Whether you're dealing with a blocked drain in central Manchester or need emergency drainage services in Salford, our experienced team is just a phone call away.
+          {BRAND.brandName} is proud to serve homeowners and businesses throughout {BRAND.serviceAreaLabel} and the surrounding areas. Whether you're dealing with a blocked drain in Stoke-on-Trent or need emergency plumbing in Newcastle-under-Lyme, our experienced team is just a phone call away.
         </p>
         <p class="text-lg text-muted-foreground leading-relaxed">
           We offer fast response times across all our service areas, with most call-outs attended within 1-2 hours. Our local knowledge means we understand the specific drainage challenges faced by properties in different parts of {BRAND.serviceAreaLabel}.
@@ -56,7 +56,7 @@ const combinedPageSchema = [breadcrumbSchema, webPageSchema];
   </section>
 
   <!-- Featured Areas -->
-  {['manchester', 'salford', 'stockport', 'bolton'].map((slug, index) => {
+  {['stoke-on-trent', 'newcastle-under-lyme', 'stafford', 'crewe'].map((slug, index) => {
     const location = LOCATIONS.find(l => l.slug === slug);
     if (!location) return null;
     const bgClass = index % 2 === 0 ? 'bg-muted/30' : '';
@@ -186,7 +186,7 @@ const combinedPageSchema = [breadcrumbSchema, webPageSchema];
         Ready to Get Your Drains Sorted?
       </h2>
       <p class="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-        Whether you're in Manchester, Salford, or anywhere across Greater Manchester, our local team is just a phone call away.
+        Whether you're in Stoke-on-Trent or anywhere within our 25-mile service area, our local team is just a phone call away.
       </p>
       <a href={`tel:${BRAND.phone}`} class="bg-white text-primary font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-white/90 transition-all text-lg inline-block">
         Call {BRAND.phoneFormatted}

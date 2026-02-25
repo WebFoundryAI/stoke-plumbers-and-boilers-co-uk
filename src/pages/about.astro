@@ -7,10 +7,10 @@ import { ABOUT_CONTENT } from '../data/staticContent';
 import { getBreadcrumbSchema, getWebPageSchema, serializeSchema } from '../utils/schema';
 
 // SEO-optimized title (50-60 chars)
-const title = `About Us | Manchester's Trusted Drainage Specialists`;
+const title = `About Us | ${BRAND.brandName}`;
 
 // SEO-optimized description (120-155 chars) with benefits and CTA
-const description = `Meet ${BRAND.brandName} - fully insured drainage engineers serving Greater Manchester 24/7. No call-out fee. Call ${BRAND.phoneFormatted}.`;
+const description = `Meet ${BRAND.brandName} - fully insured plumbing and boiler engineers serving ${BRAND.serviceAreaLabel} 24/7. No call-out fee. Call ${BRAND.phoneFormatted}.`;
 
 const breadcrumbItems = [
   { name: "Home", url: "/" },
@@ -79,9 +79,9 @@ const combinedPageSchema = [breadcrumbSchema, webPageSchema];
 
       <!-- Explore Our Services -->
       <div class="mt-16">
-        <h2 class="text-2xl font-bold mb-6">Our Drainage Services</h2>
+        <h2 class="text-2xl font-bold mb-6">Our Services</h2>
         <p class="text-muted-foreground mb-6">
-          We offer a comprehensive range of <a href="/services/" class="text-primary hover:underline">drainage services</a> to homes and businesses across Greater Manchester.
+          We offer a comprehensive range of <a href="/services/" class="text-primary hover:underline">plumbing and boiler services</a> to homes and businesses across {BRAND.serviceAreaLabel}.
         </p>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {SERVICES.map((service) => (
@@ -100,7 +100,7 @@ const combinedPageSchema = [breadcrumbSchema, webPageSchema];
       <div class="mt-12">
         <h2 class="text-2xl font-bold mb-6">Areas We Cover</h2>
         <p class="text-muted-foreground mb-6">
-          Our local engineers provide fast-response drainage services across <a href="/locations/" class="text-primary hover:underline">Greater Manchester</a>, including:
+          Our local engineers provide fast-response services across <a href="/locations/" class="text-primary hover:underline">{BRAND.serviceAreaLabel}</a>, including:
         </p>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {LOCATIONS.slice(0, 4).map((loc) => (

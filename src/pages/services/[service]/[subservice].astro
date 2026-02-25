@@ -23,8 +23,8 @@ if (!service || !subService) return Astro.redirect('/services/');
 const content = getSubServiceContent(subService.slug);
 const faqs = content?.faqs || [];
 
-const title = `${subService.name} Manchester | No Call-Out Fee | 24/7`;
-const description = `${subService.description} No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted} for same-day help in Manchester.`;
+const title = `${subService.name} ${BRAND.primaryLocation} | No Call-Out Fee | 24/7`;
+const description = `${subService.description} No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted} for same-day help in ${BRAND.primaryLocation}.`;
 const pageSchema = [
   ...getSubServicePageSchema(service, subService),
   getBreadcrumbSchema([
@@ -39,7 +39,7 @@ const pageSchema = [
 
 <BaseLayout title={title} description={description} canonical={`/services/${service.slug}/${subService.slug}/`} schema={pageSchema}>
   <HeroWithLeadForm
-    title={`${subService.name} in Manchester`}
+    title={`${subService.name} in ${BRAND.primaryLocation}`}
     description={subService.description}
     formId={`subservice-${service.slug}-${subService.slug}-lead-form`}
     source={`subservice:${service.slug}/${subService.slug}`}
@@ -57,7 +57,7 @@ const pageSchema = [
     <section class="section-padding bg-white">
       <div class="container-wide px-4">
         <div class="max-w-3xl">
-          <h2 class="text-2xl md:text-3xl font-bold mb-4">{subService.name} across Manchester</h2>
+          <h2 class="text-2xl md:text-3xl font-bold mb-4">{subService.name} across {BRAND.serviceAreaLabel}</h2>
           <p class="text-muted-foreground leading-relaxed">{content.detailedDescription}</p>
         </div>
       </div>
