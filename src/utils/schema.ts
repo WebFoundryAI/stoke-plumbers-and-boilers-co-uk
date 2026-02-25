@@ -22,7 +22,7 @@ const CUSTOMER_REVIEWS = [
     author: "Sarah Thompson",
     datePublished: "2024-10-28",
     reviewRating: 5,
-    reviewBody: "Used Blocked Drains Manchester for a CCTV survey after repeated drainage issues. They identified the root cause and provided a clear report with options. Very thorough and reasonably priced."
+    reviewBody: "Used Stoke Plumbers and Boilers for a CCTV survey after repeated drainage issues. They identified the root cause and provided a clear report with options. Very thorough and reasonably priced."
   },
   {
     author: "Michael Davies",
@@ -70,7 +70,7 @@ export function getBaseBusinessSchema() {
     "@type": "Plumber",
     "@id": `${siteUrl}/#business`,
     "name": BRAND.brandName,
-    "description": "Professional drain unblocking, CCTV surveys, and emergency drainage services across Manchester and Greater Manchester. Fast response, no call-out fee, 24/7 availability.",
+    "description": `Professional plumbing and boiler services across ${BRAND.serviceAreaLabel}. Fast response, no call-out fee, 24/7 availability.`,
     "url": siteUrl,
     "telephone": `+44${BRAND.phone.substring(1)}`,
     "email": BRAND.email,
@@ -79,15 +79,15 @@ export function getBaseBusinessSchema() {
     "address": {
       "@type": "PostalAddress",
       "streetAddress": `${BRAND.addressLine1}, ${BRAND.addressLine2}`,
-      "addressLocality": "Manchester",
-      "addressRegion": "Greater Manchester",
+      "addressLocality": "Stoke-on-Trent",
+      "addressRegion": "Staffordshire",
       "postalCode": BRAND.postcode,
       "addressCountry": "GB"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": 53.4808,
-      "longitude": -2.2426
+      "latitude": 52.9988,
+      "longitude": -2.1820
     },
     "openingHoursSpecification": [
       {
@@ -105,7 +105,7 @@ export function getBaseBusinessSchema() {
       "name": area,
       "containedInPlace": {
         "@type": "AdministrativeArea",
-        "name": "Greater Manchester"
+        "name": LOCATIONS.find(l => l.name === area)?.countyOrRegion || "Staffordshire"
       }
     })),
     "hasOfferCatalog": {
@@ -256,7 +256,7 @@ export function getLocationPageSchema(location: Location) {
       },
       "containedInPlace": {
         "@type": "AdministrativeArea",
-        "name": location.countyOrRegion || "Greater Manchester"
+        "name": location.countyOrRegion || "Staffordshire"
       }
     },
     "geo": {
@@ -280,7 +280,7 @@ export function getLocationServicePageSchema(location: Location, service: Servic
     "@type": "Service",
     "@id": `${siteUrl}/locations/${location.slug}/${service.slug}/#service`,
     "name": `${service.name} in ${location.name}`,
-    "description": `Professional ${service.name.toLowerCase()} services in ${location.name}, ${location.countyOrRegion || 'Greater Manchester'}. Fast response, no call-out fee, 24/7 availability.`,
+    "description": `Professional ${service.name.toLowerCase()} services in ${location.name}, ${location.countyOrRegion || 'Staffordshire'}. Fast response, no call-out fee, 24/7 availability.`,
     "url": `${siteUrl}/locations/${location.slug}/${service.slug}`,
     "provider": {
       "@id": `${siteUrl}/#business`
@@ -444,14 +444,14 @@ export function getOrganizationSchema() {
       "height": 630
     },
     "image": `${siteUrl}/images/og-default.jpg`,
-    "description": "Professional drain unblocking, CCTV surveys, and emergency drainage services across Manchester and Greater Manchester. Fast response, no call-out fee, 24/7 availability.",
+    "description": `Professional plumbing and boiler services across ${BRAND.serviceAreaLabel}. Fast response, no call-out fee, 24/7 availability.`,
     "telephone": `+44${BRAND.phone.substring(1)}`,
     "email": BRAND.email,
     "address": {
       "@type": "PostalAddress",
       "streetAddress": `${BRAND.addressLine1}, ${BRAND.addressLine2}`,
-      "addressLocality": "Manchester",
-      "addressRegion": "Greater Manchester",
+      "addressLocality": "Stoke-on-Trent",
+      "addressRegion": "Staffordshire",
       "postalCode": BRAND.postcode,
       "addressCountry": "GB"
     },
@@ -482,8 +482,8 @@ export function getOrganizationSchema() {
       "@type": "Place",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Manchester",
-        "addressRegion": "Greater Manchester",
+        "addressLocality": "Stoke-on-Trent",
+        "addressRegion": "Staffordshire",
         "addressCountry": "GB"
       }
     },
@@ -574,7 +574,7 @@ export function getWebSiteSchema() {
     "@id": `${siteUrl}/#website`,
     "url": siteUrl,
     "name": BRAND.brandName,
-    "description": "Professional drain unblocking, CCTV surveys, and emergency drainage services across Manchester and Greater Manchester.",
+    "description": `Professional plumbing and boiler services across ${BRAND.serviceAreaLabel}.`,
     "publisher": {
       "@id": `${siteUrl}/#organization`
     },

@@ -5,8 +5,8 @@ import { BRAND } from '../data/brand';
 import { getBaseBusinessSchema, getBreadcrumbSchema, getFAQSchema } from '../utils/schema';
 import { CONTACT_CONTENT } from '../data/staticContent';
 
-const title = `Contact Blocked Drains Manchester | Call ${BRAND.phoneFormatted}`;
-const description = `Contact ${BRAND.brandName} for emergency and routine drainage services across Greater Manchester. Call ${BRAND.phoneFormatted} or submit a quote request.`;
+const title = `Contact ${BRAND.brandName} | Call ${BRAND.phoneFormatted}`;
+const description = `Contact ${BRAND.brandName} for emergency and routine plumbing and boiler services across ${BRAND.serviceAreaLabel}. Call ${BRAND.phoneFormatted} or submit a quote request.`;
 
 const pageSchema = [
   getBaseBusinessSchema(),
@@ -41,7 +41,7 @@ const pageSchema = [
   <section class="section-padding">
     <div class="container-wide px-4">
       <div class="max-w-3xl">
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">Areas we cover across Greater Manchester</h2>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Areas we cover</h2>
         <p class="text-muted-foreground leading-relaxed">{CONTACT_CONTENT.serviceAreaOverview}</p>
       </div>
     </div>

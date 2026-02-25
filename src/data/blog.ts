@@ -21,8 +21,8 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: "signs-of-blocked-drain",
     title: "7 Warning Signs You Have a Blocked Drain",
     metaTitle: "7 Warning Signs of a Blocked Drain | When to Call a Professional",
-    metaDescription: "Learn the early warning signs of a blocked drain in Manchester. From slow drainage to bad smells, know when to call a professional before it becomes an emergency.",
-    excerpt: "Catching a blocked drain early can save you hundreds of pounds in emergency repairs. Here are the key warning signs every Manchester homeowner should know.",
+    metaDescription: "Learn the early warning signs of a blocked drain in Stoke-on-Trent. From slow drainage to bad smells, know when to call a professional before it becomes an emergency.",
+    excerpt: "Catching a blocked drain early can save you hundreds of pounds in emergency repairs. Here are the key warning signs every local homeowner should know.",
     content: `A blocked drain rarely happens overnight. In most cases, there are warning signs that build up over weeks or even months before a complete blockage occurs. Recognising these signs early can help you avoid costly emergency callouts and potential water damage to your property.
 
 ## 1. Slow Draining Water
@@ -57,10 +57,10 @@ Unexplained damp patches on walls or floors near drainage pipes could indicate a
 
 If you notice any of these warning signs, it's best to act quickly. While minor slow drainage might be resolved with a plunger, persistent issues usually require professional attention. Our team at ${BRAND.brandName} can quickly diagnose the problem using [CCTV drain surveys](/services/cctv-drain-surveys/) and clear blockages using [high-pressure jetting](/services/drain-jetting/).
 
-If you're experiencing a complete blockage, our [blocked drain specialists](/services/blocked-drains/) are available 24/7 across [Manchester](/locations/manchester/) and surrounding areas. For urgent situations, our [emergency drain service](/services/emergency-drain-services/) guarantees a rapid response.
+If you're experiencing a complete blockage, our [blocked drain specialists](/services/blocked-drains/) are available 24/7 across [Stoke-on-Trent](/locations/stoke-on-trent/) and surrounding areas. For urgent situations, our [emergency drain service](/services/emergency-drain-services/) guarantees a rapid response.
 
 Call us on ${BRAND.phoneFormatted} for a no-obligation quote, or [contact us online](/contact/) to book an appointment.`,
-    author: "Blocked Drains Manchester",
+    author: "Stoke Plumbers and Boilers",
     publishDate: "2026-01-15",
     category: "Drain Maintenance",
     tags: ["blocked drains", "drain problems", "home maintenance", "plumbing tips"],
@@ -70,10 +70,10 @@ Call us on ${BRAND.phoneFormatted} for a no-obligation quote, or [contact us onl
   {
     slug: "prevent-blocked-drains-kitchen",
     title: "How to Prevent Blocked Kitchen Drains: A Complete Guide",
-    metaTitle: "Prevent Kitchen Drain Blockages | Manchester Tips",
-    metaDescription: "Stop kitchen drain blockages before they start. Expert tips on preventing grease buildup, food waste disposal, and maintaining clear drains in your Manchester home.",
+    metaTitle: "Prevent Kitchen Drain Blockages | Stoke-on-Trent Tips",
+    metaDescription: "Stop kitchen drain blockages before they start. Expert tips on preventing grease buildup, food waste disposal, and maintaining clear drains in your Stoke-on-Trent home.",
     excerpt: "Kitchen drains are the most commonly blocked drains in UK homes. Learn how to prevent costly blockages with these simple daily habits.",
-    content: `Kitchen drains handle more abuse than any other drain in your home. Between cooking oils, food scraps, soap residue, and everything else that goes down the sink, it's no wonder they're the most frequently blocked drains we see in Manchester homes.
+    content: `Kitchen drains handle more abuse than any other drain in your home. Between cooking oils, food scraps, soap residue, and everything else that goes down the sink, it's no wonder they're the most frequently blocked drains we see in Stoke-on-Trent homes.
 
 ## Why Kitchen Drains Block So Easily
 
@@ -132,7 +132,7 @@ If you notice water draining slowly despite following these tips, or if you expe
 For persistent kitchen blockages, professional [drain jetting](/services/drain-jetting/) thoroughly cleans the pipe walls and removes grease buildup far more effectively than DIY methods. If you have a [blocked sink](/services/blocked-drains/blocked-sink/) that won't clear, our engineers can usually resolve it within the hour.
 
 Contact ${BRAND.brandName} on ${BRAND.phoneFormatted} for expert advice and assistance, or [get in touch online](/contact/).`,
-    author: "Blocked Drains Manchester",
+    author: "Stoke Plumbers and Boilers",
     publishDate: "2026-01-10",
     category: "Drain Maintenance",
     tags: ["kitchen drains", "prevention tips", "drain maintenance", "grease blockages"],
@@ -141,8 +141,8 @@ Contact ${BRAND.brandName} on ${BRAND.phoneFormatted} for expert advice and assi
   {
     slug: "cctv-drain-survey-home-buyers",
     title: "Why Every Home Buyer Needs a CCTV Drain Survey",
-    metaTitle: "CCTV Drain Survey Before Buying | Manchester Guide",
-    metaDescription: "Buying a house in Manchester? Discover why a pre-purchase CCTV drain survey could save you thousands and give you negotiating power.",
+    metaTitle: "CCTV Drain Survey Before Buying | Stoke-on-Trent Guide",
+    metaDescription: "Buying a house in Stoke-on-Trent? Discover why a pre-purchase CCTV drain survey could save you thousands and give you negotiating power.",
     excerpt: "A CCTV drain survey before buying a property can reveal hidden problems that cost thousands to fix. Here's what you need to know.",
     content: `When buying a house, most people focus on the obvious: the roof, windows, boiler, and electrics. But there's a hidden network of pipes beneath every property that's often overlooked until something goes wrong. A CCTV drain survey can reveal problems that standard home surveys miss entirely.
 
@@ -196,7 +196,7 @@ If the CCTV survey reveals issues, you have several options:
 3. **Walk away** if the problems are too severe
 4. **Proceed with full knowledge** and budget for repairs
 
-Many of our Manchester customers have negotiated thousands off their purchase price after our surveys revealed drain problems the seller wasn't aware of.
+Many of our customers have negotiated thousands off their purchase price after our surveys revealed drain problems the seller wasn't aware of.
 
 ## What to Look for in a Survey Provider
 
@@ -208,12 +208,12 @@ Choose a drainage company that provides:
 - Recommendations for remedial work
 - No-obligation quotes for any repairs needed
 
-At ${BRAND.brandName}, we provide comprehensive [pre-purchase drain surveys](/services/cctv-drain-surveys/pre-purchase-survey/) across [Manchester](/locations/manchester/) and Greater Manchester. Our engineers explain exactly what they find and provide honest advice about any issues.
+At ${BRAND.brandName}, we provide comprehensive [pre-purchase drain surveys](/services/cctv-drain-surveys/pre-purchase-survey/) across [Stoke-on-Trent](/locations/stoke-on-trent/) and surrounding areas. Our engineers explain exactly what they find and provide honest advice about any issues.
 
 If a survey reveals damage, we also offer professional [drain repairs](/services/drain-repairs/) including [pipe relining](/services/drain-repairs/pipe-relining/) and [drain excavation](/services/drain-repairs/drain-excavation/) to resolve problems quickly.
 
 Book your [CCTV drain survey](/services/cctv-drain-surveys/) today by calling ${BRAND.phoneFormatted} or [contact us online](/contact/).`,
-    author: "Blocked Drains Manchester",
+    author: "Stoke Plumbers and Boilers",
     publishDate: "2026-01-05",
     category: "CCTV Surveys",
     tags: ["CCTV survey", "home buying", "property survey", "drain inspection"],
@@ -224,7 +224,7 @@ Book your [CCTV drain survey](/services/cctv-drain-surveys/) today by calling ${
     slug: "emergency-drain-problems-what-to-do",
     title: "Emergency Drain Problems: What to Do Before the Engineer Arrives",
     metaTitle: "Emergency Drain Problems | Immediate Steps While Waiting for Help",
-    metaDescription: "Experiencing a drain emergency in Manchester? Learn what to do immediately to minimise damage while waiting for professional help to arrive.",
+    metaDescription: "Experiencing a drain emergency in Stoke-on-Trent? Learn what to do immediately to minimise damage while waiting for professional help to arrive.",
     excerpt: "When drains fail, every minute counts. Here's how to protect your property while waiting for emergency drainage help.",
     content: `A drain emergency can strike at any time, often at the most inconvenient moment. Whether it's sewage backing up into your home, a blocked drain causing flooding, or a collapsed pipe, knowing what to do in the first few minutes can significantly reduce damage to your property.
 
@@ -315,12 +315,12 @@ When you call ${BRAND.brandName} for emergency assistance, we'll ask:
 - Whether it's affecting multiple properties
 - Your contact details
 
-We aim to arrive within 1-2 hours for [emergency callouts across Manchester](/locations/manchester/emergency-drain-services/) and Greater Manchester. Our [emergency drain services](/services/emergency-drain-services/) team is available 24 hours a day, 7 days a week.
+We aim to arrive within 1-2 hours for [emergency callouts across Stoke-on-Trent](/locations/stoke-on-trent/emergency-drain-services/) and surrounding areas. Our [emergency drain services](/services/emergency-drain-services/) team is available 24 hours a day, 7 days a week.
 
 Whether you're dealing with a [flooding emergency](/services/emergency-drain-services/flooding-emergency/) or a [sewage emergency](/services/emergency-drain-services/sewage-emergency/), our engineers carry specialist equipment including [CCTV cameras](/services/cctv-drain-surveys/) and [high-pressure jetting](/services/drain-jetting/) to diagnose and resolve problems on the first visit.
 
 Call us immediately on ${BRAND.phoneFormatted} if you're experiencing a drain emergency, or [request urgent help online](/contact/).`,
-    author: "Blocked Drains Manchester",
+    author: "Stoke Plumbers and Boilers",
     publishDate: "2025-12-28",
     category: "Emergency Services",
     tags: ["emergency drains", "flooding", "sewage backup", "drain emergency"],
@@ -329,8 +329,8 @@ Call us immediately on ${BRAND.phoneFormatted} if you're experiencing a drain em
   {
     slug: "drain-jetting-vs-drain-rods",
     title: "Drain Jetting vs Drain Rods: Which Method is Best?",
-    metaTitle: "Drain Jetting vs Rods | Manchester Comparison",
-    metaDescription: "Should you use drain rods or high-pressure jetting to clear a blockage? Our Manchester drainage experts explain when each method works best.",
+    metaTitle: "Drain Jetting vs Rods | Stoke-on-Trent Comparison",
+    metaDescription: "Should you use drain rods or high-pressure jetting to clear a blockage? Our local drainage experts explain when each method works best.",
     excerpt: "Not all drain clearing methods are equal. Learn when jetting beats rods and why professionals prefer high-pressure water.",
     content: `When it comes to clearing blocked drains, there are two main methods: traditional drain rods and modern high-pressure water jetting. Each has its place, but understanding the differences can help you choose the right solution for your problem.
 
@@ -412,7 +412,7 @@ At ${BRAND.brandName}, we use high-pressure jetting as our primary clearing meth
 
 ## The Professional Approach
 
-When you call us for a blocked drain in Manchester, we typically:
+When you call us for a blocked drain in Stoke-on-Trent, we typically:
 
 1. Assess the problem and access points
 2. Use CCTV to locate and identify the blockage (if needed)
@@ -432,8 +432,8 @@ While DIY drain rods might seem cheaper initially, consider:
 
 If you suspect pipe damage is causing recurring issues, a [CCTV drain survey](/services/cctv-drain-surveys/) can confirm whether [drain repairs](/services/drain-repairs/) are needed before committing to more extensive work.
 
-For reliable [drain clearing across Manchester](/locations/manchester/drain-jetting/), call ${BRAND.brandName} on ${BRAND.phoneFormatted} or [request a quote online](/contact/). We also cover [Salford](/locations/salford/), [Stockport](/locations/stockport/), and [Altrincham](/locations/altrincham/).`,
-    author: "Blocked Drains Manchester",
+For reliable [drain clearing across Stoke-on-Trent](/locations/stoke-on-trent/drain-jetting/), call ${BRAND.brandName} on ${BRAND.phoneFormatted} or [request a quote online](/contact/). We also cover [Newcastle-under-Lyme](/locations/newcastle-under-lyme/), [Stafford](/locations/stafford/), and [Crewe](/locations/crewe/).`,
+    author: "Stoke Plumbers and Boilers",
     publishDate: "2025-12-20",
     category: "Drain Services",
     tags: ["drain jetting", "drain rods", "blocked drains", "drain clearing"],

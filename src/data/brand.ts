@@ -1,20 +1,20 @@
 export const BRAND = {
-  brandName: "Blocked Drains Manchester",
-  domain: "manchesterblockeddrain.co.uk",
-  primaryLocation: "Manchester",
-  serviceAreaLabel: "Manchester and Greater Manchester",
-  phone: "03338802296",
-  phoneFormatted: "0333 880 2296",
-  email: "contactus@manchesterblockeddrain.co.uk",
-  addressLine1: "Bartle House",
-  addressLine2: "Oxford Court, Manchester",
-  postcode: "M2 3WQ",
-  tagline: "Fast, Reliable Drainage Solutions",
+  brandName: "Stoke Plumbers and Boilers",
+  domain: "stokeplumbersandboilers.co.uk",
+  primaryLocation: "Stoke-on-Trent",
+  serviceAreaLabel: "Stoke-on-Trent and surrounding areas",
+  phone: "01782390100",
+  phoneFormatted: "01782 390100",
+  email: "contactus@stokeplumbersandboilers.co.uk",
+  addressLine1: "234 Victoria Rd",
+  addressLine2: "Stoke-on-Trent",
+  postcode: "ST4 2LW",
+  tagline: "Fast, Reliable Plumbing and Boiler Services",
   emergencyAvailable: true,
   socialProfiles: [
-    "https://www.facebook.com/BlockedDrainsManchester",
-    "https://twitter.com/DrainManchester",
-    "https://www.instagram.com/blockeddrains_manchester",
-    "https://www.linkedin.com/company/blocked-drains-manchester"
+    "https://www.facebook.com/StokePlumbersAndBoilers",
+    "https://twitter.com/StokePlumbers",
+    "https://www.instagram.com/stokeplumbersandboilers",
+    "https://www.linkedin.com/company/stoke-plumbers-and-boilers"
   ]
 };

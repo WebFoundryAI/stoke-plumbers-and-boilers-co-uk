@@ -58,8 +58,8 @@ describe('FAQ Data', () => {
   });
 
   describe('getLocationFAQs', () => {
-    it('returns FAQs for "Manchester"', () => {
-      const faqs = getLocationFAQs('Manchester');
+    it('returns FAQs for "Stoke-on-Trent"', () => {
+      const faqs = getLocationFAQs('Stoke-on-Trent');
       expect(faqs.length).toBeGreaterThan(0);
     });
 

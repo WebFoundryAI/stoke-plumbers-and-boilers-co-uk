@@ -5,7 +5,7 @@ import { BLOG_POSTS, getAllCategories } from '../../data/blog';
 import { getBreadcrumbSchema } from '../../utils/schema';
 
 const title = `Drainage Tips & Advice | ${BRAND.brandName} Blog`;
-const description = `Expert drainage tips, advice, and guides from Manchester's trusted drain specialists. Learn about blocked drains, CCTV surveys, maintenance tips, and more.`;
+const description = `Expert plumbing, boiler, and drainage tips from ${BRAND.brandName}. Learn about blocked drains, boiler maintenance, CCTV surveys, and more.`;
 
 const breadcrumbSchema = getBreadcrumbSchema([
   { name: "Home", url: "/" },
@@ -37,7 +37,7 @@ function formatDate(dateString: string): string {
       <div class="container-wide px-4 text-center text-white">
         <h1 class="text-4xl md:text-5xl font-bold mb-4">Drainage Tips & Advice</h1>
         <p class="text-lg text-white/90 max-w-2xl mx-auto">
-          Expert guides and practical tips from Manchester's trusted drainage specialists
+          Expert guides and practical tips from {BRAND.brandName}
         </p>
       </div>
     </div>
