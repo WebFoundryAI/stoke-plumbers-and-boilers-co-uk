@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroWithLeadForm from '../../components/HeroWithLeadForm.astro';
+import { BRAND } from '../../data/brand';
+import { SERVICES } from '../../data/services';
+import { SERVICES_OVERVIEW } from '../../data/staticContent';
+import { getBreadcrumbSchema, getWebPageSchema, serializeSchema } from '../../utils/schema';
+
+// SEO-optimized title (50-60 chars)
+const title = `Our Drainage Services | Manchester Drain Specialists`;
+
+// SEO-optimized description (120-155 chars) with benefits and CTA
+const description = `Full range of drainage services: blocked drains, CCTV surveys, drain jetting, and emergency repairs. No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted}.`;
+
+const breadcrumbItems = [
+  { name: "Home", url: "/" },
+  { name: "Services", url: "/services/" }
+];
+
+const breadcrumbSchema = getBreadcrumbSchema(breadcrumbItems);
+const webPageSchema = getWebPageSchema({
+  url: '/services/',
+  name: title,
+  description: description,
+  breadcrumb: breadcrumbItems
+});
+
+const combinedPageSchema = [breadcrumbSchema, webPageSchema];
+---
+
+<BaseLayout title={title} description={description} canonical="/services/" schema={combinedPageSchema}>
+  <HeroWithLeadForm
+    title="Our Drainage Services"
+    description={`From blocked drains to CCTV surveys, we provide comprehensive drainage solutions across ${BRAND.serviceAreaLabel}.`}
+    formId="services-lead-form"
+    source="services"
+  />
+
+  <!-- Overview -->
+  <section class="section-padding bg-muted/30">
+    <div class="container-wide px-4">
+      <nav class="text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-primary hover:underline">Home</a>
+        <span class="mx-2 text-muted-foreground">/</span>
+        <span class="text-muted-foreground">Services</span>
+      </nav>
+      <div class="max-w-3xl mx-auto">
+        <p class="text-lg text-muted-foreground leading-relaxed">
+          {SERVICES_OVERVIEW}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {SERVICES.map((service) => (
+          <a
+            href={`/services/${service.slug}/`}
+            class="bg-card p-6 rounded-xl card-elevated hover:scale-[1.02] transition-transform group"
+          >
+            <span class="text-5xl mb-4 block">{service.icon}</span>
+            <h2 class="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
+              {service.name}
+            </h2>
+            <p class="text-muted-foreground mb-4">{service.description}</p>
+
+            {service.subServices && service.subServices.length > 0 && (
+              <div class="border-t border-border pt-4 mt-4">
+                <p class="text-sm font-medium mb-2">Includes:</p>
+                <ul class="text-sm text-muted-foreground space-y-1">
+                  {service.subServices.slice(0, 3).map((sub) => (
+                    <li class="flex items-center gap-2">
+                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-trust"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22,4 12,14.01 9,11.01"></polyline></svg>
+                      {sub.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div class="mt-4 flex items-center gap-2 text-primary font-medium">
+              Learn more
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-padding bg-primary text-primary-foreground">
+    <div class="container-wide px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">
+        Need a Drainage Service?
+      </h2>
+      <p class="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+        Contact us today for a free, no-obligation quote. We're available 24/7 for emergencies.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href={`tel:${BRAND.phone}`} class="bg-white text-primary font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-white/90 transition-all text-lg">
+          Call {BRAND.phoneFormatted}
+        </a>
+        <a href="/contact/" class="border-2 border-white text-white font-semibold px-8 py-4 rounded-lg hover:bg-white hover:text-primary transition-all text-lg">
+          Get a Quote
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

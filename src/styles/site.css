@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 20% 98%;
+    --foreground: 25 25% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 25 25% 15%;
+    --primary: 25 95% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 25 10% 92%;
+    --secondary-foreground: 25 25% 20%;
+    --muted: 30 15% 95%;
+    --muted-foreground: 25 25% 28%;
+    --accent: 25 15% 20%;
+    --accent-foreground: 0 0% 100%;
+    --border: 25 15% 88%;
+    --input: 25 15% 88%;
+    --ring: 25 95% 50%;
+    --radius: 0.625rem;
+    --trust-green: 142 70% 35%;
+    --trust-green-light: 142 50% 95%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+  }
+
+  a {
+    @apply transition-colors duration-200;
+  }
+
+  a:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background rounded-sm;
+  }
+
+  p a,
+  li a,
+  article a,
+  .prose a {
+    @apply text-primary underline decoration-primary/40 underline-offset-2;
+  }
+
+  p a:hover,
+  li a:hover,
+  article a:hover,
+  .prose a:hover {
+    @apply decoration-primary text-primary/80;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .hero-section {
+    background: linear-gradient(135deg, hsl(25, 95%, 45%) 0%, hsl(20, 90%, 40%) 100%);
+    background-image: url('/images/hero-bg-mobile.webp');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+  }
+
+  @media (min-width: 768px) {
+    .hero-section {
+      background-image: url('/images/hero-bg.webp');
+      min-height: 500px;
+    }
+  }
+
+  .hero-overlay {
+    background: linear-gradient(180deg, hsla(25, 90%, 25%, 0.75) 0%, hsla(20, 85%, 20%, 0.7) 100%);
+  }
+
+  .hero-section-new {
+    min-height: 600px;
+    background: #0f172a;
+  }
+
+  .hero-gradient-overlay {
+    background: linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.88) 0%,
+      rgba(15, 23, 42, 0.75) 40%,
+      rgba(15, 23, 42, 0.30) 100%
+    );
+  }
+
+  .hero-lead-form-card {
+    color: hsl(var(--foreground));
+  }
+
+  @media (max-width: 1023px) {
+    .hero-gradient-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.85) 0%,
+        rgba(15, 23, 42, 0.60) 50%,
+        rgba(15, 23, 42, 0.40) 100%
+      );
+    }
+  }
+
+  .hero-form-input {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .hero-form-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  }
+
+  .hero-form-input::placeholder {
+    color: #94a3b8;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-primary/90 transition-all duration-200 inline-flex items-center justify-center;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary font-semibold px-6 py-3 rounded-lg hover:bg-primary hover:text-primary-foreground transition-all duration-200 inline-flex items-center justify-center;
+  }
+
+  .btn-primary:disabled,
+  .btn-outline:disabled {
+    @apply opacity-65 cursor-not-allowed;
+  }
+
+  .card-elevated {
+    box-shadow: 0 4px 20px -4px hsla(25, 95%, 50%, 0.12);
+    @apply transition-shadow duration-300;
+  }
+
+  .card-elevated:hover {
+    box-shadow: 0 8px 30px -6px hsla(25, 95%, 50%, 0.2);
+  }
+
+  .trust-badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-semibold;
+    background: hsl(142 55% 28%);
+    color: hsl(0 0% 100%);
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24 px-4;
+  }
+
+  .container-narrow {
+    @apply max-w-5xl mx-auto;
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .hp-field {
+    position: absolute !important;
+    left: -9999px !important;
+    opacity: 0 !important;
+  }
+}

@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { BRAND } from '../data/brand';
+import { getBaseBusinessSchema, getBreadcrumbSchema, getFAQSchema } from '../utils/schema';
+import { CONTACT_CONTENT } from '../data/staticContent';
+
+const title = `Contact Blocked Drains Manchester | Call ${BRAND.phoneFormatted}`;
+const description = `Contact ${BRAND.brandName} for emergency and routine drainage services across Greater Manchester. Call ${BRAND.phoneFormatted} or submit a quote request.`;
+
+const pageSchema = [
+  getBaseBusinessSchema(),
+  getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Contact', url: '/contact/' },
+  ]),
+  getFAQSchema(CONTACT_CONTENT.faqs),
+];
+---
+
+<BaseLayout title={title} description={description} canonical="/contact/" schema={pageSchema}>
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4 grid md:grid-cols-2 gap-8">
+      <div class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h1 class="text-3xl md:text-4xl font-bold mb-4">Contact our drainage team</h1>
+        <p class="text-muted-foreground mb-6">Call us for immediate support or send your details and we'll call back quickly.</p>
+
+        <p><strong>Phone:</strong> <a href={`tel:${BRAND.phone}`}>{BRAND.phoneFormatted}</a></p>
+        <p><strong>Email:</strong> <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a></p>
+        <p><strong>Address:</strong> {BRAND.addressLine1}, {BRAND.addressLine2}, {BRAND.postcode}</p>
+        <p><strong>Hours:</strong> 24/7 emergency response</p>
+      </div>
+
+      <div id="quote-form">
+        <LeadForm formId="contact-lead-form" source="contact-page" heading="Request a free quote" />
+      </div>
+    </div>
+  </section>
+
+  {/* Service area overview */}
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Areas we cover across Greater Manchester</h2>
+        <p class="text-muted-foreground leading-relaxed">{CONTACT_CONTENT.serviceAreaOverview}</p>
+      </div>
+    </div>
+  </section>
+
+  {/* Business hours + Emergency info */}
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4 grid md:grid-cols-2 gap-8">
+      <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h2 class="text-xl font-bold mb-4">Business hours and availability</h2>
+        <p class="text-muted-foreground">{CONTACT_CONTENT.businessHours}</p>
+      </article>
+      <article class="bg-card p-6 rounded-xl border border-primary shadow-sm bg-primary/5">
+        <h2 class="text-xl font-bold mb-4">Drainage emergency?</h2>
+        <p class="text-muted-foreground mb-4">{CONTACT_CONTENT.emergencyInfo}</p>
+        <a href={`tel:${BRAND.phone}`} class="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity">Call {BRAND.phoneFormatted} now</a>
+      </article>
+    </div>
+  </section>
+
+  {/* What to tell us when you call */}
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <div class="max-w-3xl">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">What to tell us when you call</h2>
+        <p class="text-muted-foreground mb-4">Having these details ready helps us dispatch the right engineer with the right equipment, giving you the fastest possible resolution:</p>
+        <ul class="space-y-2">
+          {CONTACT_CONTENT.whatToTellUs.map((item) => (
+            <li class="flex items-start gap-2">
+              <span class="text-primary mt-1 shrink-0">&#10003;</span>
+              <span class="text-muted-foreground">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  {/* Contact FAQs */}
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Frequently asked questions</h2>
+      <div class="max-w-3xl mx-auto space-y-4">
+        {CONTACT_CONTENT.faqs.map((faq, i) => (
+          <details class="bg-card rounded-lg card-elevated group" open={i === 0}>
+            <summary class="p-4 md:p-6 cursor-pointer font-semibold text-lg hover:text-primary transition-colors flex items-center justify-between">
+              {faq.question}
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 ml-2 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6"></path></svg>
+            </summary>
+            <div class="px-4 md:px-6 pb-4 md:pb-6 text-muted-foreground"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroWithLeadForm from '../../components/HeroWithLeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { LOCATIONS, getLocationBySlug } from '../../data/locations';
+import { SERVICES } from '../../data/services';
+import { BRAND } from '../../data/brand';
+import { getLocationFAQs } from '../../data/faqs';
+import { getLocationHubContent } from '../../data/locationHubContent';
+import { getRecentPosts } from '../../data/blog';
+import { getBreadcrumbSchema, getLocationPageSchema, getFAQSchema } from '../../utils/schema';
+
+export async function getStaticPaths() {
+  return LOCATIONS.map((location) => ({ params: { slug: location.slug } }));
+}
+
+const location = getLocationBySlug(Astro.params.slug || '');
+if (!location) return Astro.redirect('/locations/');
+
+const title = `Blocked Drains ${location.name} | Same-Day | No Call-Out Fee`;
+const description = `Blocked drain in ${location.name}? Same-day response, no call-out fee, fixed pricing. Local drainage engineers available 24/7. Call ${BRAND.phoneFormatted}.`;
+const faqs = getLocationFAQs(location.name);
+const hubContent = getLocationHubContent(location.slug);
+const recentPosts = getRecentPosts(3);
+const pageSchema = [
+  getLocationPageSchema(location),
+  getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Locations', url: '/locations/' },
+    { name: location.name, url: `/locations/${location.slug}/` },
+  ]),
+  getFAQSchema(faqs),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={`/locations/${location.slug}/`} schema={pageSchema} noindex={!!location.noindex}>
+  <HeroWithLeadForm
+    title={`Blocked Drains in ${location.name}`}
+    description={`Local engineers available across ${location.name} and surrounding areas for urgent and planned drainage work.`}
+    formId={`location-${location.slug}-lead-form`}
+    source={`location:${location.slug}`}
+  />
+
+  <Breadcrumbs items={[
+    { name: 'Home', url: '/' },
+    { name: 'Locations', url: '/locations/' },
+    { name: location.name },
+  ]} />
+
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4 grid md:grid-cols-2 gap-8">
+      <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h2 class="text-xl font-bold mb-4">Local response in {location.name}</h2>
+        <p class="text-muted-foreground">We attend homes and businesses across {location.name} with rapid callout availability and clear fixed pricing.</p>
+        <ul>
+          <li>Typical urgent response target: same day</li>
+          <li>Common callouts: blocked sinks, toilets, and outside drains</li>
+          <li>Coverage includes nearby neighbourhoods and links roads</li>
+        </ul>
+      </article>
+      <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h2 class="text-xl font-bold mb-4">Services available in {location.name}</h2>
+        <div class="grid gap-3">
+          {SERVICES.map((service) => (
+            <a href={`/locations/${location.slug}/${service.slug}/`}>{service.name} in {location.name}</a>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  {hubContent && (
+    <section class="section-padding">
+      <div class="container-wide px-4">
+        <div class="max-w-3xl">
+          <h2 class="text-2xl md:text-3xl font-bold mb-6">Drainage in {location.name}</h2>
+          {hubContent.drainageProfile.split('\n\n').map((paragraph) => (
+            <p class="text-muted-foreground mb-4 leading-relaxed">{paragraph}</p>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {hubContent && hubContent.landmarks.length > 0 && (
+    <section class="section-padding bg-white">
+      <div class="container-wide px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6">Areas and landmarks we serve near {location.name}</h2>
+        <div class="flex flex-wrap gap-2">
+          {hubContent.landmarks.map((landmark) => (
+            <span class="bg-muted text-muted-foreground text-sm px-3 py-1.5 rounded-full">{landmark}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {hubContent && hubContent.caseStudy && (
+    <section class="section-padding">
+      <div class="container-wide px-4">
+        <div class="max-w-3xl">
+          <h2 class="text-2xl md:text-3xl font-bold mb-6">Recent case study in {location.name}</h2>
+          <div class="bg-card p-6 md:p-8 rounded-xl border border-border shadow-sm">
+            <p class="text-muted-foreground leading-relaxed">{hubContent.caseStudy}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Areas covered near {location.name}</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {LOCATIONS.filter((l) => l.slug !== location.slug).map((nearby) => (
+          <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/locations/${nearby.slug}/`}>Blocked drains in {nearby.name}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {recentPosts.length > 0 && (
+    <section class="section-padding">
+      <div class="container-wide px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8">Helpful drainage articles</h2>
+        <div class="grid md:grid-cols-3 gap-6">
+          {recentPosts.map((post) => (
+            <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/blog/${post.slug}/`}>
+              <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded">{post.category}</span>
+              <h3 class="text-lg font-bold mt-3 mb-2">{post.title}</h3>
+              <p class="text-muted-foreground text-sm">{post.excerpt}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">{location.name} drainage FAQs</h2>
+      <div class="max-w-3xl mx-auto space-y-4">
+        {faqs.slice(0, 5).map((faq, i) => (
+          <details class="bg-card rounded-lg card-elevated group" open={i === 0}>
+            <summary class="p-4 md:p-6 cursor-pointer font-semibold text-lg hover:text-primary transition-colors flex items-center justify-between">
+              {faq.question}
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 ml-2 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6"></path></svg>
+            </summary>
+            <div class="px-4 md:px-6 pb-4 md:pb-6 text-muted-foreground"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

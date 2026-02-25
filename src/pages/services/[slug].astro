@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroWithLeadForm from '../../components/HeroWithLeadForm.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { SERVICES, getServiceBySlug, getRelatedServices } from '../../data/services';
+import { LOCATIONS } from '../../data/locations';
+import { BRAND } from '../../data/brand';
+import { getServiceFAQs } from '../../data/faqs';
+import { getRelatedBlogPosts } from '../../data/blog';
+import { getBreadcrumbSchema, getServicePageSchema, getFAQSchema } from '../../utils/schema';
+
+export async function getStaticPaths() {
+  return SERVICES.map((service) => ({ params: { slug: service.slug } }));
+}
+
+const { slug } = Astro.params;
+const service = getServiceBySlug(slug || '');
+if (!service) return Astro.redirect('/services/');
+
+const title = `${service.name} Manchester | No Call-Out Fee | 24/7`;
+const description = `${service.description} No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted} for same-day ${service.name.toLowerCase()} in Manchester.`;
+
+const breadcrumbSchema = getBreadcrumbSchema([
+  { name: 'Home', url: '/' },
+  { name: 'Services', url: '/services/' },
+  { name: service.name, url: `/services/${service.slug}/` },
+]);
+
+const faqs = getServiceFAQs(service.slug);
+const blogPosts = getRelatedBlogPosts(service.slug);
+const pageSchema = [
+  ...getServicePageSchema(service),
+  breadcrumbSchema,
+  ...(faqs.length > 0 ? [getFAQSchema(faqs)] : []),
+];
+const related = getRelatedServices(service.slug);
+---
+
+<BaseLayout title={title} description={description} canonical={`/services/${service.slug}/`} schema={pageSchema} image={service.ogImage}>
+  <HeroWithLeadForm
+    title={`${service.name} in Manchester`}
+    description={service.description}
+    formId={`service-${service.slug}-lead-form`}
+    source={`service:${service.slug}`}
+  />
+
+  <Breadcrumbs items={[
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services/' },
+    { name: service.name },
+  ]} />
+
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4 grid md:grid-cols-2 gap-8">
+      <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h2 class="text-xl font-bold mb-4">Common issues we fix</h2>
+        <ul>
+          <li>Recurring blockages and slow-draining fixtures</li>
+          <li>Bad odours and trapped wastewater</li>
+          <li>Blocked external drains and gullies</li>
+          <li>Emergency overflows and backups</li>
+        </ul>
+      </article>
+      <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h2 class="text-xl font-bold mb-4">What's included</h2>
+        <ul>
+          <li>Initial on-site diagnosis and access checks</li>
+          <li>Professional clearance equipment and safety setup</li>
+          <li>Transparent explanation of required work</li>
+          <li>Aftercare advice and prevention tips</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Our process</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-card p-6 rounded-xl border border-border shadow-sm"><h3 class="text-xl font-bold mb-2">Inspect</h3><p class="text-muted-foreground">We assess symptoms and isolate the likely blockage point.</p></div>
+        <div class="bg-card p-6 rounded-xl border border-border shadow-sm"><h3 class="text-xl font-bold mb-2">Resolve</h3><p class="text-muted-foreground">We clear and clean drains using the right method for the issue.</p></div>
+        <div class="bg-card p-6 rounded-xl border border-border shadow-sm"><h3 class="text-xl font-bold mb-2">Prevent</h3><p class="text-muted-foreground">We provide practical recommendations to reduce repeat callouts.</p></div>
+      </div>
+    </div>
+  </section>
+
+  {service.subServices && service.subServices.length > 0 && (
+    <section class="section-padding bg-white">
+      <div class="container-wide px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8">{service.name} services we offer</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {service.subServices.map((sub) => (
+            <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/services/${service.slug}/${sub.slug}/`}>
+              <h3 class="text-lg font-bold mb-2">{sub.name}</h3>
+              <p class="text-muted-foreground text-sm">{sub.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {faqs.length > 0 && (
+    <section class="section-padding">
+      <div class="container-wide px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8">{service.name} — frequently asked questions</h2>
+        <div class="max-w-3xl mx-auto space-y-4">
+          {faqs.slice(0, 6).map((faq, i) => (
+            <details class="bg-card rounded-lg card-elevated group" open={i === 0}>
+              <summary class="p-4 md:p-6 cursor-pointer font-semibold text-lg hover:text-primary transition-colors flex items-center justify-between">
+                {faq.question}
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 ml-2 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6"></path></svg>
+              </summary>
+              <div class="px-4 md:px-6 pb-4 md:pb-6 text-muted-foreground"><p>{faq.answer}</p></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {blogPosts.length > 0 && (
+    <section class="section-padding bg-white">
+      <div class="container-wide px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8">Helpful articles</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          {blogPosts.map((post) => (
+            <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/blog/${post.slug}/`}>
+              <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded">{post.category}</span>
+              <h3 class="text-lg font-bold mt-3 mb-2">{post.title}</h3>
+              <p class="text-muted-foreground text-sm">{post.excerpt}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Related services</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {related.map((item) => (
+          <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/services/${item.slug}/`}>{item.name}</a>
+        ))}
+      </div>
+
+      <h2 class="text-2xl md:text-3xl font-bold mt-12 mb-8">Popular locations for this service</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {LOCATIONS.map((location) => (
+          <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/locations/${location.slug}/${service.slug}/`}>{service.name} in {location.name}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

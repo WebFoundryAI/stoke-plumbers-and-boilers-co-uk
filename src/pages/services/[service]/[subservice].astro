@@ -1,0 +1,155 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import HeroWithLeadForm from '../../../components/HeroWithLeadForm.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { SERVICES, getServiceBySlug, getSubServiceBySlug } from '../../../data/services';
+import { LOCATIONS } from '../../../data/locations';
+import { BRAND } from '../../../data/brand';
+import { getBreadcrumbSchema, getSubServicePageSchema, getFAQSchema } from '../../../utils/schema';
+import { getSubServiceContent } from '../../../data/subServiceContent';
+
+export async function getStaticPaths() {
+  return SERVICES.flatMap((service) =>
+    (service.subServices || []).map((subService) => ({
+      params: { service: service.slug, subservice: subService.slug },
+    })),
+  );
+}
+
+const service = getServiceBySlug(Astro.params.service || '');
+const subService = getSubServiceBySlug(Astro.params.service || '', Astro.params.subservice || '');
+if (!service || !subService) return Astro.redirect('/services/');
+
+const content = getSubServiceContent(subService.slug);
+const faqs = content?.faqs || [];
+
+const title = `${subService.name} Manchester | No Call-Out Fee | 24/7`;
+const description = `${subService.description} No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted} for same-day help in Manchester.`;
+const pageSchema = [
+  ...getSubServicePageSchema(service, subService),
+  getBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services/' },
+    { name: service.name, url: `/services/${service.slug}/` },
+    { name: subService.name, url: `/services/${service.slug}/${subService.slug}/` },
+  ]),
+  ...(faqs.length > 0 ? [getFAQSchema(faqs)] : []),
+];
+---
+
+<BaseLayout title={title} description={description} canonical={`/services/${service.slug}/${subService.slug}/`} schema={pageSchema}>
+  <HeroWithLeadForm
+    title={`${subService.name} in Manchester`}
+    description={subService.description}
+    formId={`subservice-${service.slug}-${subService.slug}-lead-form`}
+    source={`subservice:${service.slug}/${subService.slug}`}
+  />
+
+  <Breadcrumbs items={[
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services/' },
+    { name: service.name, url: `/services/${service.slug}/` },
+    { name: subService.name },
+  ]} />
+
+  {/* Detailed description */}
+  {content && (
+    <section class="section-padding bg-white">
+      <div class="container-wide px-4">
+        <div class="max-w-3xl">
+          <h2 class="text-2xl md:text-3xl font-bold mb-4">{subService.name} across Manchester</h2>
+          <p class="text-muted-foreground leading-relaxed">{content.detailedDescription}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* Signs You Need This Service + Our Process */}
+  {content && (
+    <section class="section-padding">
+      <div class="container-wide px-4 grid md:grid-cols-2 gap-8">
+        <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+          <h2 class="text-xl font-bold mb-4">Signs you need {subService.name.toLowerCase()} help</h2>
+          <ul class="space-y-2">
+            {content.signsYouNeed.map((sign) => (
+              <li class="flex items-start gap-2">
+                <span class="text-primary mt-1 shrink-0">&#10003;</span>
+                <span class="text-muted-foreground text-sm">{sign}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+          <h2 class="text-xl font-bold mb-4">Our process</h2>
+          <ol class="space-y-3">
+            {content.processSteps.map((step, i) => (
+              <li class="flex items-start gap-3">
+                <span class="text-primary font-bold shrink-0">{i + 1}.</span>
+                <div>
+                  <strong class="text-sm">{step.title}</strong>
+                  <p class="text-muted-foreground text-sm mt-0.5">{step.description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </article>
+      </div>
+    </section>
+  )}
+
+  {/* Pricing Guide */}
+  {content && (
+    <section class="section-padding bg-white">
+      <div class="container-wide px-4">
+        <div class="max-w-3xl">
+          <h2 class="text-2xl md:text-3xl font-bold mb-4">Pricing guide</h2>
+          <p class="text-muted-foreground leading-relaxed">{content.pricingGuide}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* FAQ section */}
+  {faqs.length > 0 && (
+    <section class="section-padding">
+      <div class="container-wide px-4">
+        <h2 class="text-2xl md:text-3xl font-bold mb-8">{subService.name} — frequently asked questions</h2>
+        <div class="max-w-3xl mx-auto space-y-4">
+          {faqs.map((faq, i) => (
+            <details class="bg-card rounded-lg card-elevated group" open={i === 0}>
+              <summary class="p-4 md:p-6 cursor-pointer font-semibold text-lg hover:text-primary transition-colors flex items-center justify-between">
+                {faq.question}
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 ml-2 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6"></path></svg>
+              </summary>
+              <div class="px-4 md:px-6 pb-4 md:pb-6 text-muted-foreground"><p>{faq.answer}</p></div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {/* Related links + Nearby locations */}
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4 grid md:grid-cols-2 gap-8">
+      {content && content.relatedLinks.length > 0 && (
+        <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+          <h2 class="text-xl font-bold mb-4">Related services</h2>
+          <div class="grid gap-3">
+            {content.relatedLinks.map((link) => (
+              <a href={link.href}>{link.text}</a>
+            ))}
+          </div>
+        </article>
+      )}
+      <article class="bg-card p-6 rounded-xl border border-border shadow-sm">
+        <h2 class="text-xl font-bold mb-4">Nearby locations</h2>
+        <div class="grid gap-3">
+          {LOCATIONS.map((location) => (
+            <a href={`/locations/${location.slug}/${service.slug}/`}>{subService.name} in {location.name}</a>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroWithLeadForm from '../components/HeroWithLeadForm.astro';
+import { BRAND } from '../data/brand';
+import { SERVICES } from '../data/services';
+import { LOCATIONS } from '../data/locations';
+import { getHomepageSchema } from '../utils/schema';
+import { HOMEPAGE_FAQS } from '../data/faqs';
+
+const title = `Blocked Drains Manchester | 24/7 Emergency Unblocking`;
+const description = `Blocked drains in Manchester fixed fast. Local engineers, fixed pricing, and 24/7 emergency drainage response. Call ${BRAND.phoneFormatted} or request a quote online.`;
+---
+
+<BaseLayout title={title} description={description} canonical="/" schema={getHomepageSchema()}>
+  <HeroWithLeadForm
+    title="Blocked Drains Manchester — fast fixes, fair pricing"
+    description="Get same-day drainage support from experienced local engineers. We clear blocked sinks, toilets, and outside drains with no hidden extras."
+    formId="home-lead-form"
+    source="homepage"
+  />
+
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Popular drainage services</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {SERVICES.map((service) => (
+          <article class="bg-card p-6 rounded-xl card-elevated">
+            <span class="text-3xl mb-2 block" aria-hidden="true">{service.icon}</span>
+            <h3 class="text-xl font-bold mb-2">{service.name}</h3>
+            <p class="text-muted-foreground text-sm">{service.shortLabel}</p>
+            <a href={`/services/${service.slug}/`} class="btn-outline mt-4 no-underline">View service</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">How it works</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <article class="bg-card p-6 rounded-xl border border-border shadow-sm"><h3 class="text-xl font-bold mb-2">1) Tell us the issue</h3><p class="text-muted-foreground">Share your postcode and drainage problem so we can prioritise correctly.</p></article>
+        <article class="bg-card p-6 rounded-xl border border-border shadow-sm"><h3 class="text-xl font-bold mb-2">2) Engineer attends fast</h3><p class="text-muted-foreground">Local engineers aim for rapid arrival and complete diagnostics on site.</p></article>
+        <article class="bg-card p-6 rounded-xl border border-border shadow-sm"><h3 class="text-xl font-bold mb-2">3) Clear, fix, and report</h3><p class="text-muted-foreground">We resolve the problem and explain the root cause and prevention steps.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Why choose us</h2>
+      <ul class="grid md:grid-cols-2 gap-6 list-none p-0">
+        <li class="bg-card p-6 rounded-xl border border-border shadow-sm">No call-out charge and fixed pricing before work starts.</li>
+        <li class="bg-card p-6 rounded-xl border border-border shadow-sm">Fully insured engineers with modern diagnostic equipment.</li>
+        <li class="bg-card p-6 rounded-xl border border-border shadow-sm">Domestic and commercial drainage specialists.</li>
+        <li class="bg-card p-6 rounded-xl border border-border shadow-sm">Emergency response available day and night.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-padding bg-white">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Coverage near Manchester</h2>
+      <p class="text-muted-foreground mb-8">We cover Greater Manchester locations including:</p>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {LOCATIONS.map((location) => (
+          <a class="bg-card p-6 rounded-xl border border-border shadow-sm hover:shadow-md hover:border-primary transition-all no-underline text-foreground" href={`/locations/${location.slug}/`}>Blocked drains in {location.name}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-8">Frequently asked questions</h2>
+      <div class="max-w-3xl mx-auto space-y-4">
+        {HOMEPAGE_FAQS.slice(0, 6).map((faq, i) => (
+          <details class="bg-card rounded-lg card-elevated group" open={i === 0}>
+            <summary class="p-4 md:p-6 cursor-pointer font-semibold text-lg hover:text-primary transition-colors flex items-center justify-between">
+              {faq.question}
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="shrink-0 ml-2 group-open:rotate-180 transition-transform"><path d="m6 9 6 6 6-6"></path></svg>
+            </summary>
+            <div class="px-4 md:px-6 pb-4 md:pb-6 text-muted-foreground"><p>{faq.answer}</p></div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-slate-900 text-white">
+    <div class="container-wide px-4 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Need urgent drainage help?</h2>
+      <p class="text-lg text-white/80 mb-8">Call now for a rapid response anywhere in {BRAND.serviceAreaLabel}.</p>
+      <a class="bg-white text-primary font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-white/90 transition-all text-lg inline-block no-underline" href={`tel:${BRAND.phone}`}>Call {BRAND.phoneFormatted}</a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,243 @@
+---
+import '../styles/site.css';
+import { BRAND } from '../data/brand';
+import { SERVICES } from '../data/services';
+import { LOCATIONS } from '../data/locations';
+import { serializeSchema } from '../utils/schema';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  schema?: object | object[];
+  noindex?: boolean;
+  keywords?: string;
+}
+
+const defaultTitle = `${BRAND.brandName} | 24/7 Drainage Services`;
+const defaultDescription = `Professional drain unblocking, CCTV surveys, and emergency drainage services across ${BRAND.serviceAreaLabel}. No call-out fee, fixed pricing. Call ${BRAND.phoneFormatted}.`;
+
+const { title = defaultTitle, description = defaultDescription, canonical, image, schema, noindex = false, keywords } = Astro.props;
+const siteUrl = `https://${BRAND.domain}`;
+const canonicalUrl = canonical ? `${siteUrl}${canonical}` : `${siteUrl}${Astro.url.pathname}`;
+const defaultOgImage = `${siteUrl}/images/og-default.jpg`;
+const ogImage = image ? `${siteUrl}${image}` : defaultOgImage;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={BRAND.brandName} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:locale" content="en_GB" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={title} />
+
+    {schema && <script type="application/ld+json" set:html={serializeSchema(schema)} />}
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="google-site-verification" content="K-EecGB0etoqiVHnYYUt2Sc6LrEKjoGmykJD-HOd7fo" />
+    <link rel="preload" as="image" href="/images/hero-bg-mobile.webp" type="image/webp" media="(max-width: 767px)" />
+    <link rel="preload" as="image" href="/images/hero-bg.webp" type="image/webp" media="(min-width: 768px)" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500
+      });
+      try {
+        var consentChoice = localStorage.getItem('cookie_consent');
+        if (consentChoice === 'accepted') {
+          gtag('consent', 'update', {
+            ad_storage: 'granted',
+            ad_user_data: 'granted',
+            ad_personalization: 'granted',
+            analytics_storage: 'granted'
+          });
+        }
+      } catch (e) {}
+    </script>
+    <script is:inline>
+      function loadGTM() {
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZBN7YE9HZJ';
+        s.async = true;
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-ZBN7YE9HZJ');
+      }
+      if (typeof requestIdleCallback === 'function') {
+        requestIdleCallback(loadGTM, { timeout: 3000 });
+      } else {
+        setTimeout(loadGTM, 2000);
+      }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-primary focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:font-semibold">Skip to content</a>
+    <header class="bg-white border-b border-border sticky top-0 z-40">
+      <div class="bg-slate-900 text-white">
+        <div class="container-wide px-4 flex items-center justify-between py-2 text-sm">
+          <a href={`tel:${BRAND.phone}`} class="font-semibold hover:underline">{BRAND.phoneFormatted} · 24/7 Emergency</a>
+          <span class="hidden md:inline">{BRAND.serviceAreaLabel}</span>
+        </div>
+      </div>
+
+      <div class="container-wide px-4 py-3 flex items-center justify-between gap-4">
+        <a href="/" class="text-xl font-bold text-primary no-underline">{BRAND.brandName}</a>
+
+        <nav class="hidden lg:flex items-center gap-6" aria-label="Main navigation">
+          <a class="font-semibold text-foreground hover:text-primary transition-colors no-underline" href="/">Home</a>
+          <a class="font-semibold text-foreground hover:text-primary transition-colors no-underline" href="/services/">Services</a>
+          <a class="font-semibold text-foreground hover:text-primary transition-colors no-underline" href="/locations/">Locations</a>
+          <a class="font-semibold text-foreground hover:text-primary transition-colors no-underline" href="/about/">About</a>
+          <a class="font-semibold text-foreground hover:text-primary transition-colors no-underline" href="/blog/">Blog</a>
+          <a class="font-semibold text-foreground hover:text-primary transition-colors no-underline" href="/contact/">Contact</a>
+        </nav>
+
+        <a class="btn-primary hidden md:inline-flex no-underline" href={`tel:${BRAND.phone}`}>Call 24/7</a>
+
+        <button id="mobile-menu-button" class="border border-border bg-transparent font-semibold px-4 py-2 rounded-lg hover:bg-muted transition-all lg:hidden cursor-pointer" type="button" aria-label="Toggle navigation" aria-controls="mobile-menu" aria-expanded="false">Menu</button>
+      </div>
+
+      <nav id="mobile-menu" class="hidden lg:hidden border-t border-border" aria-label="Mobile navigation">
+        <div class="container-wide px-4 py-4 grid gap-3">
+          <a href="/">Home</a>
+          <a href="/services/">Services</a>
+          <a href="/locations/">Locations</a>
+          <a href="/about/">About</a>
+          <a href="/blog/">Blog</a>
+          <a href="/contact/">Contact</a>
+          <a class="btn-primary no-underline" href={`tel:${BRAND.phone}`}>Call now</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content" class="flex-grow">
+      <slot />
+    </main>
+
+    <footer class="bg-slate-900 text-slate-100 py-12">
+      <div class="container-wide px-4 grid md:grid-cols-3 gap-8">
+        <div>
+          <p class="font-semibold mb-2">{BRAND.brandName}</p>
+          <p class="text-sm text-slate-300">{BRAND.addressLine1}, {BRAND.addressLine2}, {BRAND.postcode}</p>
+          <p class="text-sm mt-2"><a href={`tel:${BRAND.phone}`} class="underline">{BRAND.phoneFormatted}</a></p>
+          <p class="text-sm"><a href={`mailto:${BRAND.email}`} class="underline">{BRAND.email}</a></p>
+          <p class="text-sm mt-2">24/7 emergency response · Mon–Sun</p>
+        </div>
+
+        <div>
+          <p class="font-semibold mb-2">Services</p>
+          <ul class="text-sm space-y-1">
+            {SERVICES.slice(0, 6).map((service) => (
+              <li><a href={`/services/${service.slug}/`} class="hover:underline">{service.name}</a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p class="font-semibold mb-2">Coverage & trust</p>
+          <ul class="text-sm space-y-1">
+            {LOCATIONS.map((location) => (
+              <li><a href={`/locations/${location.slug}/`} class="hover:underline">Blocked drains in {location.name}</a></li>
+            ))}
+          </ul>
+          <div class="flex flex-wrap gap-2 mt-4">
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Local engineers</span>
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Fixed pricing</span>
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Fully insured</span>
+          </div>
+          <p class="text-sm mt-4">
+            <a href="/privacy/" class="underline">Privacy</a> · <a href="/terms/" class="underline">Terms</a> · <a href="/cookies/" class="underline">Cookies</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="fixed inset-x-0 bottom-0 z-[45] bg-white border-t border-border py-2 px-4 pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:hidden">
+      <div class="container-wide px-4 flex gap-2">
+        <a class="btn-primary w-full no-underline" href={`tel:${BRAND.phone}`} aria-label="Call now">Call now</a>
+        <a class="btn-outline w-full no-underline" href="#quote-form" aria-label="Jump to quote form">Get quote</a>
+      </div>
+    </div>
+
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-border shadow-lg p-4 hidden" role="dialog" aria-label="Cookie consent">
+      <div class="container-wide px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-sm text-muted-foreground">We use cookies to analyse site traffic and improve your experience. See our <a href="/cookies/" class="underline">cookie policy</a>.</p>
+        <div class="flex gap-2">
+          <button id="cookie-reject" class="border border-border bg-transparent font-semibold px-4 py-2 rounded-lg hover:bg-muted transition-all cursor-pointer">Reject</button>
+          <button id="cookie-accept" class="btn-primary cursor-pointer">Accept</button>
+        </div>
+      </div>
+    </div>
+
+    <script is:inline>
+      const menuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      menuButton?.addEventListener('click', () => {
+        const isHidden = mobileMenu?.classList.toggle('hidden');
+        menuButton.setAttribute('aria-expanded', isHidden ? 'false' : 'true');
+      });
+    </script>
+
+    <script is:inline>
+      (function () {
+        var banner = document.getElementById('cookie-banner');
+        try {
+          var consent = localStorage.getItem('cookie_consent');
+          if (!consent && banner) banner.classList.remove('hidden');
+        } catch (e) {
+          if (banner) banner.classList.remove('hidden');
+        }
+
+        document.getElementById('cookie-accept')?.addEventListener('click', function () {
+          try { localStorage.setItem('cookie_consent', 'accepted'); } catch (e) {}
+          if (typeof gtag === 'function') {
+            gtag('consent', 'update', {
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
+              analytics_storage: 'granted',
+            });
+          }
+          banner?.classList.add('hidden');
+        });
+
+        document.getElementById('cookie-reject')?.addEventListener('click', function () {
+          try { localStorage.setItem('cookie_consent', 'rejected'); } catch (e) {}
+          banner?.classList.add('hidden');
+        });
+      })();
+    </script>
+  </body>
+</html>

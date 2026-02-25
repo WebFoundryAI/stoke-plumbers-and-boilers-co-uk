@@ -1,0 +1,8 @@
+# Redirects for Cloudflare Pages/Workers
+# Redirect www to non-www (canonical domain)
+# Note: HTTP to HTTPS is handled automatically by Cloudflare's SSL/TLS settings
+
+# www to non-www redirect (301 permanent)
+https://www.manchesterblockeddrain.co.uk/* https://manchesterblockeddrain.co.uk/:splat 301
+http://www.manchesterblockeddrain.co.uk/* https://manchesterblockeddrain.co.uk/:splat 301
+http://manchesterblockeddrain.co.uk/* https://manchesterblockeddrain.co.uk/:splat 301

@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { BRAND } from '../../data/brand';
+import { BLOG_POSTS, getAllCategories } from '../../data/blog';
+import { getBreadcrumbSchema } from '../../utils/schema';
+
+const title = `Drainage Tips & Advice | ${BRAND.brandName} Blog`;
+const description = `Expert drainage tips, advice, and guides from Manchester's trusted drain specialists. Learn about blocked drains, CCTV surveys, maintenance tips, and more.`;
+
+const breadcrumbSchema = getBreadcrumbSchema([
+  { name: "Home", url: "/" },
+  { name: "Blog", url: "/blog/" }
+]);
+
+const categories = getAllCategories();
+
+// Sort posts by date (newest first)
+const sortedPosts = [...BLOG_POSTS].sort(
+  (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
+);
+
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+}
+---
+
+<BaseLayout title={title} description={description} canonical="/blog/">
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay py-16 md:py-20">
+      <div class="container-wide px-4 text-center text-white">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">Drainage Tips & Advice</h1>
+        <p class="text-lg text-white/90 max-w-2xl mx-auto">
+          Expert guides and practical tips from Manchester's trusted drainage specialists
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Posts Grid -->
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <!-- Categories Filter -->
+      <div class="flex flex-wrap gap-2 mb-10 justify-center">
+        <span class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium">
+          All Posts
+        </span>
+        {categories.map((category) => (
+          <span class="px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm font-medium hover:bg-primary/10 transition-colors cursor-default">
+            {category}
+          </span>
+        ))}
+      </div>
+
+      <!-- Posts Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map((post) => (
+          <article class="bg-white border border-border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded">
+                  {post.category}
+                </span>
+                <span class="text-xs text-muted-foreground">
+                  {post.readingTime} min read
+                </span>
+              </div>
+              <h2 class="text-xl font-bold mb-3 line-clamp-2">
+                <a href={`/blog/${post.slug}/`} class="hover:text-primary transition-colors">
+                  {post.title}
+                </a>
+              </h2>
+              <p class="text-muted-foreground text-sm mb-4 line-clamp-3">
+                {post.excerpt}
+              </p>
+              <div class="flex items-center justify-between">
+                <time datetime={post.publishDate} class="text-xs text-muted-foreground">
+                  {formatDate(post.publishDate)}
+                </time>
+                <a href={`/blog/${post.slug}/`} class="text-primary text-sm font-medium hover:underline">
+                  Read more →
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section-padding bg-primary text-primary-foreground">
+    <div class="container-wide px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Need Professional Help?</h2>
+      <p class="text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+        Our expert team is available 24/7 for drain emergencies and scheduled appointments.
+      </p>
+      <a href={`tel:${BRAND.phone}`} class="bg-white text-primary font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-white/90 transition-all text-lg inline-block">
+        Call {BRAND.phoneFormatted}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

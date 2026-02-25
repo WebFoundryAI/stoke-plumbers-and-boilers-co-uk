@@ -1,0 +1,266 @@
+---
+import { SERVICES } from '../data/services';
+import { BRAND } from '../data/brand';
+
+interface Props {
+  formId?: string;
+  source?: string;
+  heading?: string;
+  compact?: boolean;
+}
+
+const {
+  formId = 'lead-form',
+  source = 'website',
+  heading = 'Get a fast local quote',
+  compact = false,
+} = Astro.props;
+---
+
+<div class={`bg-card p-5 rounded-xl border border-border shadow-sm hero-lead-form-card ${compact ? 'p-4' : ''}`}>
+  <h2 class="text-xl font-bold mb-1">{heading}</h2>
+
+  <div id={`${formId}-error-summary`} class="border border-red-200 bg-red-50 text-red-800 rounded-lg p-3 mt-3 hidden" role="alert" aria-live="assertive" tabindex="-1">
+    <p class="font-bold mb-1">Please check the form:</p>
+    <ul id={`${formId}-error-list`}></ul>
+  </div>
+
+  <form class="grid gap-3 mt-3 js-lead-form" id={formId} novalidate data-source={source}>
+    <input type="text" name="company" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <div>
+      <label class="block font-semibold mb-1" for={`${formId}-name`}>Full name</label>
+      <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-name`} name="name" type="text" required autocomplete="name" />
+      <p class="text-red-700 text-xs mt-0.5" id={`${formId}-name-error`}></p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-3">
+      <div>
+        <label class="block font-semibold mb-1" for={`${formId}-phone`}>Phone</label>
+        <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-phone`} name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
+        <p class="text-red-700 text-xs mt-0.5" id={`${formId}-phone-error`}></p>
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1" for={`${formId}-postcode`}>Postcode</label>
+        <div class="grid grid-cols-[1fr_auto] gap-2">
+          <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-postcode`} name="postcode" type="text" required autocomplete="postal-code" />
+          <button class="btn-outline cursor-pointer" type="button" data-action="lookup">Find address</button>
+        </div>
+        <p class="text-red-700 text-xs mt-0.5" id={`${formId}-postcode-error`}></p>
+      </div>
+    </div>
+
+    <div id={`${formId}-address-lookup-wrap`} class="hidden">
+      <label class="block font-semibold mb-1" for={`${formId}-address-select`}>Select your address</label>
+      <select class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-address-select`} name="addressLookup">
+        <option value="">Select an address</option>
+      </select>
+    </div>
+
+    <div id={`${formId}-address-manual-wrap`}>
+      <label class="block font-semibold mb-1" for={`${formId}-address`}>Address</label>
+      <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-address`} name="address" type="text" autocomplete="street-address" placeholder="House number and street" />
+      <p class="text-red-700 text-xs mt-0.5" id={`${formId}-address-error`}></p>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1" for={`${formId}-service`}>Service needed</label>
+      <select class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-service`} name="service" required autocomplete="off">
+        <option value="">Select a service</option>
+        {SERVICES.map((service) => (
+          <option value={service.name}>{service.name}</option>
+        ))}
+        <option value="Other">Other</option>
+      </select>
+      <p class="text-red-700 text-xs mt-0.5" id={`${formId}-service-error`}></p>
+    </div>
+
+    <div>
+      <label class="block font-semibold mb-1" for={`${formId}-notes`}>Job details (optional)</label>
+      <textarea class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-notes`} name="notes" rows="2" placeholder="Describe the problem and best callback time."></textarea>
+      <p class="text-red-700 text-xs mt-0.5" id={`${formId}-notes-error`}></p>
+    </div>
+
+    <button class="btn-primary w-full cursor-pointer" type="submit">Request quote</button>
+  </form>
+
+  <div id={`${formId}-success`} class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg hidden" aria-live="polite">
+    <p>Thanks — your request has been sent. If urgent, call us now:</p>
+    <a class="btn-primary no-underline mt-2" href={`tel:${BRAND.phone}`}>Call {BRAND.phoneFormatted}</a>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const forms = document.querySelectorAll('.js-lead-form');
+    if (!forms.length) return;
+    const postcodeRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
+    const phoneRegex = /^(?:(?:\+44\s?|0)(?:1\d{3,4}|2\d{3,4}|3\d{3,4}|7\d{3}|8\d{3})\s?\d{3,4}\s?\d{0,4})$/;
+
+    forms.forEach((form) => {
+      const formElement = form;
+      if (!(formElement instanceof HTMLFormElement) || formElement.dataset.bound === 'true') return;
+      formElement.dataset.bound = 'true';
+
+      const formId = formElement.id;
+      const summary = document.getElementById(`${formId}-error-summary`);
+      const errorList = document.getElementById(`${formId}-error-list`);
+      const success = document.getElementById(`${formId}-success`);
+      const addressLookupWrap = document.getElementById(`${formId}-address-lookup-wrap`);
+      const addressManualWrap = document.getElementById(`${formId}-address-manual-wrap`);
+      const addressSelect = formElement.querySelector('select[name="addressLookup"]');
+      const addressInput = formElement.querySelector('input[name="address"]');
+
+      const setFieldError = (name, message) => {
+        const field = formElement.querySelector(`[name="${name}"]`);
+        const error = document.getElementById(`${formId}-${name}-error`);
+        if (field instanceof HTMLElement) {
+          if (message) {
+            field.setAttribute('aria-invalid', 'true');
+          } else {
+            field.removeAttribute('aria-invalid');
+          }
+        }
+        if (error) error.textContent = message || '';
+      };
+
+      const validate = () => {
+        const data = new FormData(formElement);
+        const errors = [];
+        ['name', 'phone', 'postcode', 'service'].forEach((name) => {
+          const value = String(data.get(name) || '').trim();
+          if (!value) errors.push({ field: name, message: `${name.charAt(0).toUpperCase()}${name.slice(1)} is required.` });
+        });
+
+        const postcode = String(data.get('postcode') || '').trim();
+        if (postcode && !postcodeRegex.test(postcode)) errors.push({ field: 'postcode', message: 'Enter a valid UK postcode.' });
+
+        const phone = String(data.get('phone') || '').trim().replace(/[\s\-()]/g, '');
+        if (phone && !phoneRegex.test(phone)) errors.push({ field: 'phone', message: 'Enter a valid UK phone number (e.g. 07700 900000).' });
+
+        ['name', 'phone', 'postcode', 'service', 'address', 'notes'].forEach((name) => setFieldError(name, ''));
+        errors.forEach(({ field, message }) => setFieldError(field, message));
+
+        if (summary && errorList) {
+          if (errors.length) {
+            summary.classList.remove('hidden');
+            errorList.innerHTML = errors.map((e) => `<li>${e.message}</li>`).join('');
+            summary.focus();
+          } else {
+            summary.classList.add('hidden');
+            errorList.innerHTML = '';
+          }
+        }
+
+        return errors.length === 0;
+      };
+
+      // Postcode lookup
+      formElement.addEventListener('click', async (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        const button = target.closest('button[data-action="lookup"]');
+        if (!button || !(button instanceof HTMLButtonElement)) return;
+
+        const postcodeInput = formElement.querySelector('input[name="postcode"]');
+        if (!(postcodeInput instanceof HTMLInputElement)) return;
+        const postcode = postcodeInput.value.trim();
+
+        if (!postcodeRegex.test(postcode)) {
+          setFieldError('postcode', 'Enter a valid UK postcode.');
+          return;
+        }
+
+        setFieldError('postcode', '');
+        const originalText = button.textContent;
+        button.textContent = 'Finding…';
+        button.disabled = true;
+
+        try {
+          var cleanPC = postcode.replace(/\s/g, '');
+          var res = await fetch('/api/postcode-lookup?postcode=' + encodeURIComponent(cleanPC));
+          var data = await res.json();
+
+          if (!res.ok || !Array.isArray(data.addresses) || !data.addresses.length) {
+            setFieldError('postcode', data.error || 'No addresses found. Please type your address manually.');
+            return;
+          }
+
+          if (addressSelect instanceof HTMLSelectElement) {
+            addressSelect.innerHTML = '<option value="">Select an address</option>';
+            data.addresses.forEach(function (addr) {
+              var opt = document.createElement('option');
+              opt.value = addr.line;
+              opt.textContent = addr.line;
+              addressSelect.appendChild(opt);
+            });
+          }
+          if (addressLookupWrap) addressLookupWrap.classList.remove('hidden');
+          if (addressManualWrap) addressManualWrap.classList.add('hidden');
+          if (addressSelect instanceof HTMLSelectElement) {
+            addressSelect.focus();
+            try { addressSelect.showPicker(); } catch (_) {}
+          }
+        } catch (err) {
+          setFieldError('postcode', 'Could not find addresses. Please type your address manually.');
+          if (addressManualWrap) addressManualWrap.classList.remove('hidden');
+        } finally {
+          button.textContent = originalText;
+          button.disabled = false;
+        }
+      });
+
+      // Auto-fill address when user selects from dropdown
+      if (addressSelect) {
+        addressSelect.addEventListener('change', (event) => {
+          const target = event.target;
+          if (target instanceof HTMLSelectElement && addressInput instanceof HTMLInputElement && target.value) {
+            addressInput.value = target.value;
+            if (addressLookupWrap) addressLookupWrap.classList.add('hidden');
+            if (addressManualWrap) addressManualWrap.classList.remove('hidden');
+            addressInput.readOnly = true;
+          }
+        });
+      }
+
+      formElement.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!validate()) return;
+
+        const submit = formElement.querySelector('button[type="submit"]');
+        if (submit instanceof HTMLButtonElement) {
+          submit.disabled = true;
+          submit.textContent = 'Sending…';
+        }
+
+        const payload = Object.fromEntries(new FormData(formElement).entries());
+        payload.source = formElement.dataset.source || 'website';
+
+        try {
+          const res = await fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          if (!res.ok) {
+            const body = await res.json().catch(() => ({}));
+            throw new Error(body?.error || 'Could not submit form');
+          }
+          formElement.classList.add('hidden');
+          success?.classList.remove('hidden');
+        } catch (error) {
+          if (summary && errorList) {
+            summary.classList.remove('hidden');
+            errorList.innerHTML = `<li>${error instanceof Error ? error.message : 'Unable to submit. Please call us now.'}</li>`;
+            summary.focus();
+          }
+          if (submit instanceof HTMLButtonElement) {
+            submit.disabled = false;
+            submit.textContent = 'Request quote';
+          }
+        }
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,51 @@
+---
+import HeroLeadForm from './HeroLeadForm.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  bullets?: string[];
+  formId?: string;
+  source?: string;
+}
+
+const {
+  title,
+  description,
+  bullets = ['Fast response across Manchester', 'Fixed pricing with no hidden extras', 'Fully insured drainage engineers', '24/7 emergency availability'],
+  formId = 'hero-lead-form',
+  source = 'hero',
+} = Astro.props;
+---
+
+<section class="hero-section">
+  <div class="hero-overlay py-16 md:py-20">
+    <div class="container-wide px-4">
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div class="text-white">
+          <span class="trust-badge mb-4 inline-block">Trusted local drainage specialists</span>
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">{title}</h1>
+          <p class="text-lg text-white/80 max-w-[60ch] mb-6">{description}</p>
+          <ul class="space-y-2 mb-6 list-none p-0">
+            {bullets.map((item) => (
+              <li class="flex items-center gap-2">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="text-green-400 shrink-0"><path d="M20 6 9 17l-5-5"></path></svg>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <div class="flex flex-wrap gap-2">
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Fast response</span>
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Fixed pricing</span>
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Fully insured</span>
+            <span class="bg-white/10 border border-white/20 rounded-full px-3 py-1 text-sm">Local engineers</span>
+          </div>
+        </div>
+
+        <div id="quote-form">
+          <HeroLeadForm formId={formId} source={source} heading="Request your free quote" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
