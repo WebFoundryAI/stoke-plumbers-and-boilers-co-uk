@@ -24,10 +24,30 @@ export const onRequestPost = async (context: any) => {
   const payload = await context.request.json<Record<string, unknown>>().catch(() => null);
   if (!payload) return Response.json({ error: 'Invalid JSON payload' }, { status: 400 });
 
+  // Input length validation
+  const maxLengths: Record<string, number> = { name: 200, phone: 20, postcode: 10, address: 500, service: 200, notes: 2000, source: 50 };
+  for (const [field, max] of Object.entries(maxLengths)) {
+    if (String(payload[field] ?? '').length > max) {
+      return Response.json({ error: `${field} exceeds maximum length of ${max} characters` }, { status: 400 });
+    }
+  }
+
   const required = ['name', 'phone', 'postcode', 'service'];
   const errors = required.filter((field) => !String(payload[field] ?? '').trim()).map((field) => `${field} is required`);
   if (String(payload.company ?? '').trim()) errors.push('spam detected');
   if (errors.length) return Response.json({ error: errors.join(', '), fields: errors }, { status: 400 });
+
+  // Phone number validation
+  const phoneRegex = /^(?:(?:\+44\s?|0)\d[\d\s]{8,12})$/;
+  if (!phoneRegex.test(String(payload.phone).trim())) {
+    return Response.json({ error: 'Please provide a valid UK phone number' }, { status: 400 });
+  }
+
+  // Postcode validation
+  const postcodeRegex = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i;
+  if (!postcodeRegex.test(String(payload.postcode).trim())) {
+    return Response.json({ error: 'Please provide a valid UK postcode' }, { status: 400 });
+  }
 
   const db = context.env.DB;
   if (!db) {
@@ -50,7 +70,7 @@ export const onRequestPost = async (context: any) => {
       context.request.headers.get('user-agent') || null,
     ).run();
   } catch (err: any) {
-    return Response.json({ error: 'Failed to store lead', details: err.message }, { status: 502 });
+    return Response.json({ error: 'Failed to store lead' }, { status: 502 });
   }
 
   return Response.json({ success: true });

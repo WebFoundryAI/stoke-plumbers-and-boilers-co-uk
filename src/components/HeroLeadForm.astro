@@ -145,11 +145,16 @@ const {
         if (summary && errorList) {
           if (errors.length) {
             summary.classList.remove('hidden');
-            errorList.innerHTML = errors.map((e) => `<li>${e.message}</li>`).join('');
+            errorList.textContent = '';
+            errors.forEach((e) => {
+              var li = document.createElement('li');
+              li.textContent = e.message;
+              errorList.appendChild(li);
+            });
             summary.focus();
           } else {
             summary.classList.add('hidden');
-            errorList.innerHTML = '';
+            errorList.textContent = '';
           }
         }
 
@@ -188,7 +193,11 @@ const {
           }
 
           if (addressSelect instanceof HTMLSelectElement) {
-            addressSelect.innerHTML = '<option value="">Select an address</option>';
+            addressSelect.textContent = '';
+            var defaultOpt = document.createElement('option');
+            defaultOpt.value = '';
+            defaultOpt.textContent = 'Select an address';
+            addressSelect.appendChild(defaultOpt);
             data.addresses.forEach(function (addr) {
               var opt = document.createElement('option');
               opt.value = addr.line;
@@ -252,7 +261,10 @@ const {
         } catch (error) {
           if (summary && errorList) {
             summary.classList.remove('hidden');
-            errorList.innerHTML = `<li>${error instanceof Error ? error.message : 'Unable to submit. Please call us now.'}</li>`;
+            errorList.textContent = '';
+            var li = document.createElement('li');
+            li.textContent = error instanceof Error ? error.message : 'Unable to submit. Please call us now.';
+            errorList.appendChild(li);
             summary.focus();
           }
           if (submit instanceof HTMLButtonElement) {

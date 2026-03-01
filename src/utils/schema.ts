@@ -122,13 +122,14 @@ export function getBaseBusinessSchema() {
       }))
     },
     "sameAs": BRAND.socialProfiles,
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": AGGREGATE_RATING.ratingValue,
-      "reviewCount": AGGREGATE_RATING.reviewCount,
-      "bestRating": AGGREGATE_RATING.bestRating,
-      "worstRating": AGGREGATE_RATING.worstRating
-    },
+    // TODO: Add aggregateRating once real verified reviews are collected for stokeplumbersandboilers.co.uk
+    // "aggregateRating": {
+    //   "@type": "AggregateRating",
+    //   "ratingValue": AGGREGATE_RATING.ratingValue,
+    //   "reviewCount": AGGREGATE_RATING.reviewCount,
+    //   "bestRating": AGGREGATE_RATING.bestRating,
+    //   "worstRating": AGGREGATE_RATING.worstRating
+    // },
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": `+44${BRAND.phone.substring(1)}`,

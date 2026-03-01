@@ -1,50 +1,17 @@
-# Blocked Drains Manchester - robots.txt
-# https://manchesterblockeddrain.co.uk
-# Last updated: 2026-02-12
+# Stoke Plumbers and Boilers - robots.txt
+# https://stokeplumbersandboilers.co.uk
 
-# ==============================================
-# AI CRAWLER POLICIES
-# ==============================================
-# Allowed: All AI search crawlers for maximum visibility
-#   - GPTBot (ChatGPT search), Google-Extended (AI Overviews)
-#   - PerplexityBot, Claude-Web, Anthropic-AI, Applebot-Extended
-# Blocked: Training-only scrapers (no search benefit)
-#   - CCBot, cohere-ai
-# ==============================================
-
-# Block AI training scrapers (no search visibility benefit)
-User-agent: CCBot
-Disallow: /
-
-User-agent: cohere-ai
-Disallow: /
-
-# Explicitly allow AI search crawlers
-User-agent: GPTBot
-Allow: /
-Disallow: /admin
-Disallow: /_astro/
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-# ==============================================
-# DEFAULT RULES (all other crawlers)
-# ==============================================
 User-agent: *
 Allow: /
+
+# Disallow admin and system paths
 Disallow: /admin
-Disallow: /admin/
 Disallow: /login
-Disallow: /reset-password
-Disallow: /status
+Disallow: /api/
 Disallow: /_astro/
 
-# Sitemap location
-Sitemap: https://manchesterblockeddrain.co.uk/sitemap.xml
+# Sitemap
+Sitemap: https://stokeplumbersandboilers.co.uk/sitemap.xml
 
-# Host preference (canonical non-www HTTPS)
-Host: https://manchesterblockeddrain.co.uk
+# Host
+Host: https://stokeplumbersandboilers.co.uk

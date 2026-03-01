@@ -58,49 +58,10 @@ const ogImage = image ? `${siteUrl}${image}` : defaultOgImage;
     {schema && <script type="application/ld+json" set:html={serializeSchema(schema)} />}
 
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="google-site-verification" content="K-EecGB0etoqiVHnYYUt2Sc6LrEKjoGmykJD-HOd7fo" />
+    <!-- TODO: Add site-specific Google Search Console verification for stokeplumbersandboilers.co.uk -->
     <link rel="preload" as="image" href="/images/hero-bg-mobile.webp" type="image/webp" media="(max-width: 767px)" />
     <link rel="preload" as="image" href="/images/hero-bg.webp" type="image/webp" media="(min-width: 768px)" />
-    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-    <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);} 
-      gtag('consent', 'default', {
-        ad_storage: 'denied',
-        ad_user_data: 'denied',
-        ad_personalization: 'denied',
-        analytics_storage: 'denied',
-        wait_for_update: 500
-      });
-      try {
-        var consentChoice = localStorage.getItem('cookie_consent');
-        if (consentChoice === 'accepted') {
-          gtag('consent', 'update', {
-            ad_storage: 'granted',
-            ad_user_data: 'granted',
-            ad_personalization: 'granted',
-            analytics_storage: 'granted'
-          });
-        }
-      } catch (e) {}
-    </script>
-    <script is:inline>
-      function loadGTM() {
-        var s = document.createElement('script');
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZBN7YE9HZJ';
-        s.async = true;
-        document.head.appendChild(s);
-        gtag('js', new Date());
-        gtag('config', 'G-ZBN7YE9HZJ');
-      }
-      if (typeof requestIdleCallback === 'function') {
-        requestIdleCallback(loadGTM, { timeout: 3000 });
-      } else {
-        setTimeout(loadGTM, 2000);
-      }
-    </script>
+    <!-- TODO: Add site-specific Google Analytics ID for stokeplumbersandboilers.co.uk -->
   </head>
   <body class="min-h-screen flex flex-col">
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-primary focus:px-4 focus:py-2 focus:rounded focus:shadow-lg focus:font-semibold">Skip to content</a>
