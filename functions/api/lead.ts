@@ -27,7 +27,7 @@ export const onRequestPost = async (context: any) => {
   // Input length validation
   const maxLengths: Record<string, number> = { name: 200, phone: 20, postcode: 10, address: 500, service: 200, notes: 2000, source: 50 };
   for (const [field, max] of Object.entries(maxLengths)) {
-    if (String(payload[field] ?? '').length > max) {
+    if (String(payload[field] ?? '').trim().length > max) {
       return Response.json({ error: `${field} exceeds maximum length of ${max} characters` }, { status: 400 });
     }
   }

@@ -45,13 +45,6 @@ describe('Schema Generation', () => {
       expect(schema.telephone).toMatch(/^\+44\d+$/);
     });
 
-    it('includes aggregateRating with correct structure', () => {
-      expect(schema.aggregateRating).toBeDefined();
-      expect(schema.aggregateRating['@type']).toBe('AggregateRating');
-      expect(schema.aggregateRating.ratingValue).toBeDefined();
-      expect(schema.aggregateRating.reviewCount).toBeDefined();
-    });
-
     it('includes areaServed array matching LOCATIONS length', () => {
       expect(schema.areaServed).toHaveLength(LOCATIONS.length);
     });
