@@ -12,6 +12,7 @@ export const BRAND = {
   tagline: "Fast, Reliable Plumbing and Boiler Services",
   emergencyAvailable: true,
   ga4Id: "G-XJ39R9246N",
+  gscVerification: "google961cee0b68e77cd7",
   socialProfiles: [
     "https://www.facebook.com/StokePlumbersAndBoilers",
     "https://twitter.com/StokePlumbers",
