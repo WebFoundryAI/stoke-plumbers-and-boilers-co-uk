@@ -11,6 +11,7 @@ export const BRAND = {
   postcode: "ST4 2LW",
   tagline: "Fast, Reliable Plumbing and Boiler Services",
   emergencyAvailable: true,
+  ga4Id: "G-XJ39R9246N",
   socialProfiles: [
     "https://www.facebook.com/StokePlumbersAndBoilers",
     "https://twitter.com/StokePlumbers",
