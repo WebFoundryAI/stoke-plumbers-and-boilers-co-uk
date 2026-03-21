@@ -9,6 +9,7 @@ import { getLocationFAQs } from '../../data/faqs';
 import { getLocationHubContent } from '../../data/locationHubContent';
 import { getRecentPosts } from '../../data/blog';
 import { getBreadcrumbSchema, getLocationPageSchema, getFAQSchema } from '../../utils/schema';
+import LocationMap from '../../components/LocationMap.astro';
 
 export async function getStaticPaths() {
   return LOCATIONS.map((location) => ({ params: { slug: location.slug } }));
@@ -66,6 +67,14 @@ const pageSchema = [
           ))}
         </div>
       </article>
+    </div>
+  </section>
+
+  {/* Location map */}
+  <section class="section-padding">
+    <div class="container-wide px-4">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">Where we cover in {location.name}</h2>
+      <LocationMap lat={location.latitude} lng={location.longitude} locationName={location.name} />
     </div>
   </section>
 
