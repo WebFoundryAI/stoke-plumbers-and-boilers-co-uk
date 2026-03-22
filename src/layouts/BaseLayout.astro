@@ -71,7 +71,7 @@ const ogImage = image ? `${siteUrl}${image}` : defaultOgImage;
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied',
-        analytics_storage: 'denied',
+        analytics_storage: 'granted',
         wait_for_update: 500
       });
       try {
@@ -82,6 +82,13 @@ const ogImage = image ? `${siteUrl}${image}` : defaultOgImage;
             ad_user_data: 'granted',
             ad_personalization: 'granted',
             analytics_storage: 'granted'
+          });
+        } else if (consentChoice === 'rejected') {
+          gtag('consent', 'update', {
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            analytics_storage: 'denied'
           });
         }
       } catch (e) {}
@@ -230,6 +237,14 @@ const ogImage = image ? `${siteUrl}${image}` : defaultOgImage;
 
         document.getElementById('cookie-reject')?.addEventListener('click', function () {
           try { localStorage.setItem('cookie_consent', 'rejected'); } catch (e) {}
+          if (typeof gtag === 'function') {
+            gtag('consent', 'update', {
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: 'denied',
+            });
+          }
           banner?.classList.add('hidden');
         });
       })();
