@@ -7,7 +7,8 @@ interface Props {
 }
 
 const { lat, lng, locationName, zoom = 14 } = Astro.props;
-const embedUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed&t=m`;
+const query = encodeURIComponent(`${locationName}`);
+const embedUrl = `https://www.google.com/maps?q=${query}&z=${zoom}&output=embed`;
 ---
 
 <div class="rounded-xl overflow-hidden shadow-sm border border-border h-[300px] md:h-[400px]">
@@ -19,5 +20,6 @@ const embedUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=
     style="border:0;"
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"
+  allow="fullscreen"
   ></iframe>
 </div>

@@ -34,21 +34,19 @@ const {
       <p class="text-red-700 text-xs mt-0.5" id={`${formId}-name-error`}></p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-3">
-      <div>
-        <label class="block font-semibold mb-1" for={`${formId}-phone`}>Phone</label>
-        <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-phone`} name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
-        <p class="text-red-700 text-xs mt-0.5" id={`${formId}-phone-error`}></p>
-      </div>
+    <div>
+      <label class="block font-semibold mb-1" for={`${formId}-phone`}>Phone</label>
+      <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-phone`} name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
+      <p class="text-red-700 text-xs mt-0.5" id={`${formId}-phone-error`}></p>
+    </div>
 
-      <div>
-        <label class="block font-semibold mb-1" for={`${formId}-postcode`}>Postcode</label>
-        <div class="grid grid-cols-[1fr_auto] gap-2">
-          <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-postcode`} name="postcode" type="text" required autocomplete="postal-code" />
-          <button class="btn-outline cursor-pointer" type="button" data-action="lookup">Find address</button>
-        </div>
-        <p class="text-red-700 text-xs mt-0.5" id={`${formId}-postcode-error`}></p>
+    <div>
+      <label class="block font-semibold mb-1" for={`${formId}-postcode`}>Postcode</label>
+      <div class="grid grid-cols-[1fr_auto] gap-2">
+        <input class="w-full border border-border rounded-lg bg-white px-3 py-2" id={`${formId}-postcode`} name="postcode" type="text" required autocomplete="postal-code" />
+        <button class="btn-outline cursor-pointer" type="button" data-action="lookup">Find address</button>
       </div>
+      <p class="text-red-700 text-xs mt-0.5" id={`${formId}-postcode-error`}></p>
     </div>
 
     <div id={`${formId}-address-lookup-wrap`} class="hidden">
@@ -179,67 +177,88 @@ const {
 
         setFieldError('postcode', '');
         const originalText = button.textContent;
-        button.textContent = 'Finding…';
+        button.textContent = 'Searching…';
         button.disabled = true;
 
         try {
           var cleanPC = postcode.replace(/\s/g, '');
-          var res = await fetch('/api/postcode-lookup?postcode=' + encodeURIComponent(cleanPC));
+                    var res = await fetch('/api/postcode-lookup?postcode=' + encodeURIComponent(cleanPC));
 
-          // Check content-type before parsing – if the endpoint isn't deployed
-          // the host returns an HTML page and .json() would throw unhelpfully.
           var ct = (res.headers.get('content-type') || '');
           if (!ct.includes('application/json')) {
             setFieldError('postcode', 'Address lookup not available right now. Please type your address manually.');
+            if (addressManualWrap) addressManualWrap.classList.remove('hidden');
             return;
           }
 
           var data = await res.json();
 
-          if (!res.ok || !Array.isArray(data.addresses) || !data.addresses.length) {
-            setFieldError('postcode', data.error || 'No addresses found. Please type your address manually.');
+          if (!res.ok) {
+            setFieldError('postcode', data.error || 'Postcode not found.');
+            if (addressManualWrap) addressManualWrap.classList.remove('hidden');
             return;
           }
 
-          if (addressSelect instanceof HTMLSelectElement) {
-            addressSelect.textContent = '';
-            var defaultOpt = document.createElement('option');
-            defaultOpt.value = '';
-            defaultOpt.textContent = 'Select an address';
-            addressSelect.appendChild(defaultOpt);
-            data.addresses.forEach(function (addr) {
+          if (data.postcode && postcodeInput) {
+            postcodeInput.value = data.postcode;
+          }
+
+          if (data.addresses && data.addresses.length > 0 && addressSelect instanceof HTMLSelectElement) {
+            addressSelect.innerHTML = '<option value="">Select your address (' + data.addresses.length + ' found)</option>';
+            data.addresses.forEach(function(addr) {
               var opt = document.createElement('option');
-              opt.value = addr.line;
-              opt.textContent = addr.line;
+              opt.value = addr;
+              opt.textContent = addr;
               addressSelect.appendChild(opt);
             });
-          }
-          if (addressLookupWrap) addressLookupWrap.classList.remove('hidden');
-          if (addressManualWrap) addressManualWrap.classList.add('hidden');
-          if (addressSelect instanceof HTMLSelectElement) {
+            var manualOpt = document.createElement('option');
+            manualOpt.value = '__manual__';
+            manualOpt.textContent = '\u2014 My address is not listed \u2014';
+            addressSelect.appendChild(manualOpt);
+            if (addressLookupWrap) addressLookupWrap.classList.remove('hidden');
+            if (addressManualWrap) addressManualWrap.classList.add('hidden');
             addressSelect.focus();
-            try { addressSelect.showPicker(); } catch (_) {}
+          } else {
+            if (addressManualWrap) addressManualWrap.classList.remove('hidden');
+            if (addressLookupWrap) addressLookupWrap.classList.add('hidden');
+            if (addressInput instanceof HTMLInputElement) addressInput.focus();
           }
+
+          setFieldError('postcode', '');
+          button.textContent = originalText;
+          return;
         } catch (err) {
-          setFieldError('postcode', 'Address lookup failed. Please type your address manually.');
+          setFieldError('postcode', 'Could not look up addresses. Please type your address manually.');
           if (addressManualWrap) addressManualWrap.classList.remove('hidden');
         } finally {
-          button.textContent = originalText;
+          if (button.textContent === 'Searching\u2026') button.textContent = originalText;
           button.disabled = false;
         }
       });
 
-      // Auto-fill address when user selects from dropdown
       if (addressSelect) {
-        addressSelect.addEventListener('change', (event) => {
-          const target = event.target;
-          if (target instanceof HTMLSelectElement && addressInput instanceof HTMLInputElement && target.value) {
-            addressInput.value = target.value;
+        addressSelect.addEventListener('change', function(event) {
+          var sel = event.target;
+          if (!(sel instanceof HTMLSelectElement)) return;
+          if (!sel.value) return;
+
+          if (sel.value === '__manual__') {
             if (addressLookupWrap) addressLookupWrap.classList.add('hidden');
             if (addressManualWrap) addressManualWrap.classList.remove('hidden');
-            addressInput.readOnly = true;
+            if (addressInput instanceof HTMLInputElement) {
+              addressInput.value = '';
+              addressInput.focus();
+            }
+            return;
           }
+
+          if (addressInput instanceof HTMLInputElement) {
+            addressInput.value = sel.value;
+          }
+          if (addressLookupWrap) addressLookupWrap.classList.add('hidden');
+          if (addressManualWrap) addressManualWrap.classList.remove('hidden');
         });
+      });
       }
 
       formElement.addEventListener('submit', async (event) => {
