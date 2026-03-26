@@ -286,6 +286,13 @@ const {
           }
           formElement.classList.add('hidden');
           success?.classList.remove('hidden');
+          // GA4 — track successful lead form submission
+          if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', {
+              service_type: String(payload.service || 'unknown'),
+              lead_source:  String(payload.source  || 'website'),
+            });
+          }
         } catch (error) {
           if (summary && errorList) {
             summary.classList.remove('hidden');
