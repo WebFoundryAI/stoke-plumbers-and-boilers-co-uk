@@ -1,0 +1,14 @@
+{
+  "site_name": "Stoke-on-Trent Plumber",
+  "city": "Stoke-on-Trent",
+  "region": "Staffordshire",
+  "country": "England",
+  "tier": 2,
+  "domain": "stoke-plumbers-and-boilers.co.uk",
+  "layout_variant": "hero-cta",
+  "theme_variant": "trust-blue",
+  "status": "active",
+  "github_repo": "https://github.com/WebFoundryAI/stoke-plumbers-and-boilers-co-uk.git",
+  "source_folder": "rank-to-rent-sites/stoke-plumbers-and-boilers-co-uk",
+  "notes": "Tier 2 site. Migrated from existing rank-to-rent-sites folder."
+}
