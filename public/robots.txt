@@ -11,7 +11,7 @@ Disallow: /api/
 Disallow: /_astro/
 
 # Sitemap
-Sitemap: https://stokeplumbersandboilers.co.uk/sitemap.xml
+Sitemap: https://stokeplumbersandboilers.co.uk/sitemap-index.xml
 
 # Host
 Host: https://stokeplumbersandboilers.co.uk

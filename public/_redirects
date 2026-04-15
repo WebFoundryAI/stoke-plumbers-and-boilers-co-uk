@@ -6,3 +6,6 @@
 https://www.stokeplumbersandboilers.co.uk/* https://stokeplumbersandboilers.co.uk/:splat 301
 http://www.stokeplumbersandboilers.co.uk/* https://stokeplumbersandboilers.co.uk/:splat 301
 http://stokeplumbersandboilers.co.uk/* https://stokeplumbersandboilers.co.uk/:splat 301
+
+# Sitemap redirect — old single sitemap.xml now points to the index
+/sitemap.xml /sitemap-index.xml 301
