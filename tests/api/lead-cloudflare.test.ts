@@ -187,7 +187,7 @@ describe('Cloudflare Lead API (D1)', () => {
       const res = await onRequestPost(ctx);
       expect(res.status).toBe(502);
       const data: any = await res.json();
-      expect(data.error).toContain('Failed to store lead');
+      expect(data.error).toContain('Unable to save your request');
     });
 
     it('inserts correct values via prepared statement', async () => {
