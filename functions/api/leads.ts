@@ -30,7 +30,7 @@ export const onRequestGet = async (context: any) => {
         FROM leads
       `).bind(yesterdayStr).first(),
       db.prepare(`
-        SELECT id, name, phone, postcode, service, source, created_at
+        SELECT id, name, phone, postcode, address, service, notes, source, ip_address, user_agent, created_at
         FROM leads
         ORDER BY created_at DESC
         LIMIT 20
