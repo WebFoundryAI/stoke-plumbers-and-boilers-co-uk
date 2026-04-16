@@ -5,6 +5,8 @@ export interface Location {
   latitude: number;
   longitude: number;
   noindex?: boolean;
+  description?: string;
+  responseTime?: string;
 }
 
 export const PRIMARY_LOCATION: Location = {
